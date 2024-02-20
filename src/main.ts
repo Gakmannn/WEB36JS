@@ -1,4 +1,4 @@
-import './style.css'
+import './style.scss'
 console.log('Hello world')
 document.write('<div id="main" style="background: lightblue;">dfgdfgdf</div>')
 
@@ -56,3 +56,4 @@ console.log((5-5%2)/2)
 // alert ('Ваше число, возведённое во 2 степень' + num**2)
 
 // Практика 1. Задание 2
+
