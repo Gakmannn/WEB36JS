@@ -259,3 +259,48 @@ console.log(!!1)
 console.log(Boolean(1))
 console.log(!!0)
 console.log(Boolean(0))
+
+
+// while (условие) {
+   // код
+   // также называемый "телом цикла"
+// }
+
+// Цикл с предусловием
+let i = 0
+while (i<5) {
+  i++
+  console.log(i)
+}
+
+// Цикл с постусловием
+i = 0
+do {
+  i++
+  console.log(i)
+} while(i<0)
+
+// for (начало; условие; шаг) {
+  // ... тело цикла ...
+  // }
+  
+for (let i=3; i < 5; i++ ) {
+  if (i==3) continue
+  console.log(i)
+  break
+}
+
+// break - выход из цикла
+// continue - переход на следующую итерацию без выполнения оставшегося тела цикла
+
+//  0, 1 
+//  2, 3
+
+// [ [0,1],
+//   [2,3] ]
+
+for (let x=0; x<2; x++) {
+  for (let y=0; y<2; y++) {
+    console.log(`(x:${x}, y:${y})`)
+  }
+}
