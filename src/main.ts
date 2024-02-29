@@ -34,6 +34,7 @@ console.log('10 ** 5 =', 10**5) //возведение в степень
 console.log('10 % 5 =', 10%5)   //остаток от деления
 console.log('3 % 2 =', 3%2)   //остаток от деления
 
+
 // let userInput = prompt('Введите число', 10)
 // console.log(userInput)
 // console.log(typeof userInput)
@@ -304,3 +305,98 @@ for (let x=0; x<2; x++) {
     console.log(`(x:${x}, y:${y})`)
   }
 }
+
+// Вывести # столько раз, сколько указал пользователь.
+let start = 0
+let userInput = 1
+let text = ''
+while (start < userInput) {
+  text = text + '#'
+  start ++
+}
+console.log(text)
+
+// Пользователь ввел число, а на экран вывелись все числа от введенного до 0
+
+userInput = 10
+text = ''
+while (userInput) {
+  text = text + userInput +'_'
+  userInput--
+}
+console.log(text)
+
+// Запросить число и степень. Возвести число в указанную степень и вывести результат.
+let num = 10
+let count = 3
+let result = 1
+while (count) {
+  result *= num
+  count--
+}
+console.log(result)
+{
+// Запросить 2 числа и найти все общие делители.
+let num1 = 75
+let num2 = 15
+let text = ''
+let min = num1 < num2 ? num1 : num2
+while (min) {
+  if (num1 % min == 0 && num2%min == 0) {
+    text += min + '_'
+  }
+  min--
+}
+console.log(text)
+}
+
+let arr = [
+  {i:1, name: '1asdasasd'},
+  {i:2, name: '2asdasasd'},
+  {i:3, name: '3asdasasd'},
+  {i:4, name: '4asdasasd'},
+  {i:5, name: '5asdasasd'},
+]
+
+for (let i=0; i<arr.length; i++) {
+  document.body.insertAdjacentHTML('beforeend', `<p>${arr[i].i} <b>${arr[i].name}</b></p>`)
+}
+
+let res = 1000
+i=0
+while(true) {
+  res/=2
+  i++
+  if (res<50) break
+}
+console.log(res, `за ${i} итераций`)
+
+res = 1000
+i = 0
+while (res>50) {
+  res /= 2
+  i++
+}
+console.log(res, `за ${i} итераций`)
+
+res = 1000
+i = 0
+do {
+  res /= 2
+  i++
+} while (res > 50)
+console.log(res, `за ${i} итераций`)
+
+res = 1000
+i = 0
+for (i = 0; res>50; i++) {
+  res /= 2
+}
+console.log(res, `за ${i} итераций`)
+
+// x+=1  |  x = x + 1
+// x-=1  |  x = x - 1
+// x*=1  |  x = x * 1
+// x**=1 |  x = x ** 1
+// x/=1  |  x = x / 1
+// x%=1  |  x = x % 1
