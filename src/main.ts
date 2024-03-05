@@ -400,3 +400,65 @@ console.log(res, `за ${i} итераций`)
 // x**=1 |  x = x ** 1
 // x/=1  |  x = x / 1
 // x%=1  |  x = x % 1
+
+// function имя(параметры) {
+//   ...тело...
+// }
+
+console.log(message)
+function showMessage() {
+  message = 'asfsdfsd'
+  console.log('Всем привет! '+message)
+  // Если функция явно ничего не возвращает, то неявно возвращается undefined
+  // return undefined
+}
+
+console.log(showMessage())
+console.log(message)
+
+// Чистая функция функция не изменяет глобальные значения, а её результат всегда один и тот же при соответствующем значении входных параметров
+// Параметры - это внутренние именованные переменные функции
+// Параметр – это переменная, указанная в круглых скобках в объявлении функции.
+// Аргумент – это значение, которое передаётся функции при её вызове.
+function sum(a:number,b:number) {
+  console.log(a)
+  console.log(b)
+  return a+b
+}
+
+let sumOf2And4 = sum(2,4)
+
+console.log(sumOf2And4)
+
+// Второй параметр b становится не обязательным, а его значение по умолчанию равняется 100
+// Значения по умолчанию устанавливаются для параметров справа на лево
+function max(a:number, b=100) {
+  return a > b ? a : b
+}
+
+console.log(max(101))
+
+function getSum() {
+  let sum = 0
+  // console.log(a)
+  // console.log(arguments)
+  for (let i =0; i<arguments.length; i++ ) {
+    sum += arguments[i]
+  }
+  return sum
+}
+
+// @ts-ignore
+console.log(getSum(1,2,43,55,546543,35,3))
+
+function getSumRest(...rest:number[]) {
+  let sum = 0
+  // console.log(a)
+  console.log(rest)
+  for (let i =0; i<arguments.length; i++ ) {
+    sum += arguments[i]
+  }
+  return sum
+}
+
+console.log(getSumRest(1,2,43,55,546543,35,3))
