@@ -567,3 +567,175 @@ function getBracketsPairsByNum(n: number): string {
 // getBracketsPairsByNum(1) = '(' + getBracketsPairsByNum(0)== '' + ')'           = ()
 
 console.log(getBracketsPairsByNum(4))
+
+const object = {
+  b:2,
+  d:1,
+  C:1,
+  'a':12,
+  1:'sdfs',
+  obj: {
+    z:888
+  },
+  'two words': 'fsdf',
+} as Record<string, any>
+
+object.newProp = 15
+console.log(object)
+// Можем получить доступ к значению ключа через квадраьные скобки и занчение ключа строкой
+// ?так мы можем получить любое значение (даже если ключ число или состоит из нескольких слов)
+console.log(object['1'])
+console.log(object['obj'])
+console.log(object['obj'].z)
+
+// Можем получить доступ к значению ключа через точку и имя ключа 
+// ! выдаст ошибку, если ключ число или состоит из нескольких слов
+console.log(object.b)
+console.log(object.two)
+// Опциональная цепочка
+// ? Позволяет обращаться к вложенным ключам без ошибки, даже если значение не установлено
+console.log(object.obj1)
+console.log(object.obj1?.z)
+try {
+  object.obj1.z
+} catch(e:any) {
+  console.log(e.message)
+}
+console.log(object['two words'])
+delete object['two words']
+delete object.a
+for (let key in object) {
+  console.log(key)
+  console.log(object[key])
+}
+
+const jsonObj = JSON.stringify(object)
+console.log(jsonObj)
+console.log(JSON.parse(jsonObj))
+
+{
+
+  let a=1
+  let b=a
+  console.log(a,b)
+  a++
+  console.log(a,b)
+  console.log(a==b)
+  
+  const obj1 = {a:1}
+  const obj2 = obj1
+  const obj3 = {...obj1}
+
+  console.log(obj1, obj2, obj3)
+  obj1.a++
+  console.log(obj1, obj2, obj3)
+  console.log(obj1 == obj2)
+  // @ts-ignore
+  console.log({} == {})
+  // @ts-ignore
+  console.log({a:1} == {a:1})
+
+
+}
+
+
+// Создать объект, хранящий в себе отдельно числитель и знаменатель дроби, 
+// и следующие функции для работы с этим объектом.
+
+type Fraction = {
+  numerator:number,
+  denominator:number
+}
+
+const fraction1:Fraction = {
+  numerator: 1,
+  denominator: 2
+}
+
+const fraction2 = {
+  numerator: 3,
+  denominator: 10
+} as Fraction
+
+function transformToCommonDenominator(fr1: Fraction, fr2: Fraction) {
+  return {
+    fr1: {
+      numerator: fr1.numerator*fr2.denominator,
+      denominator: fr1.denominator*fr2.denominator
+    },
+    fr2: {
+      numerator: fr2.numerator * fr1.denominator,
+      denominator: fr1.denominator * fr2.denominator
+    }
+  }
+}
+
+// 1 Функция сложения 2 - х объектов - дробей.
+
+function getSumOfFractions(fr1:Fraction, fr2:Fraction) {
+  const commonFractions = transformToCommonDenominator(fr1, fr2)
+  return {
+    numerator: commonFractions.fr1.numerator + commonFractions.fr2.numerator,
+    denominator: commonFractions.fr1.denominator
+  }
+}
+
+console.log(getSumOfFractions(fraction1, fraction2))
+
+function getRedusedSumOfFractions(fr1: Fraction, fr2: Fraction) {
+  const result = getSumOfFractions(fr1, fr2)
+  return getReductedFraction(result)
+}
+
+console.log(getRedusedSumOfFractions(fraction1, fraction2))
+
+// 2 Функция вычитания 2 - х объектов - дробей.
+
+function getSubtrOfFractions(fr1: Fraction, fr2: Fraction) {
+  const commonFractions = transformToCommonDenominator(fr1, fr2)
+  const result = {
+    numerator: commonFractions.fr1.numerator - commonFractions.fr2.numerator,
+    denominator: commonFractions.fr1.denominator
+  }
+  return getReductedFraction(result)
+}
+
+console.log(getSubtrOfFractions(fraction1, fraction2))
+
+// 3 Функция умножения 2 - х объектов - дробей.
+
+function getMulOfFractions(fr1: Fraction, fr2: Fraction) {
+  const result = {
+    numerator: fr1.numerator * fr2.numerator,
+    denominator: fr1.denominator * fr2.denominator
+  }
+  return getReductedFraction(result)
+}
+
+console.log(getMulOfFractions(fraction1, fraction2))
+
+// 4 Функция деления 2 - х объектов - дробей.
+
+function getDivOfFractions(fr1: Fraction, fr2: Fraction) {
+  const result = {
+    numerator: fr1.numerator * fr2.denominator,
+    denominator: fr1.denominator * fr2.numerator
+  }
+  return getReductedFraction(result)
+}
+
+console.log(getDivOfFractions(fraction1, fraction2))
+
+// 5 Функция сокращения объекта - дроби.
+
+function getReductedFraction(fr:Fraction) {
+  const min = fr.numerator<fr.denominator? fr.numerator:fr.denominator
+  for (let i=min;i>1; i--) {
+    if (fr.numerator%i==0 && fr.denominator%i==0) {
+      fr.numerator /=i
+      fr.denominator /=i
+      return getReductedFraction(fr)
+    }
+  }
+  return fr
+}
