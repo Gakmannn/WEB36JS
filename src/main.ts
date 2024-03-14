@@ -739,3 +739,141 @@ function getReductedFraction(fr:Fraction) {
   }
   return fr
 }
+
+interface Rectangle {
+    topLeft: { x: number, y: number };
+    bottomRight: { x: number, y: number };
+}
+function getRectangleInfo(rect: Rectangle): void {
+    console.log(`Верхний левый угол: (${rect.topLeft.x}, ${rect.topLeft.y})`);
+    console.log(`Нижний правый угол: (${rect.bottomRight.x}, ${rect.bottomRight.y})`);
+}
+function getWidth(rect: Rectangle): number {
+    return Math.abs(rect.bottomRight.x - rect.topLeft.x);
+}
+function getHeight(rect: Rectangle): number {
+    return Math.abs(rect.bottomRight.y - rect.topLeft.y);
+}
+function getArea(rect: Rectangle): number {
+    return getWidth(rect) * getHeight(rect);
+}
+function getPerimeter(rect: Rectangle): number {
+    return 2 * (getWidth(rect) + getHeight(rect));
+}
+function changeWidth(rect: Rectangle, change: number): void {
+    rect.bottomRight.x += change;
+}
+function changeHeight(rect: Rectangle, change: number): void {
+    rect.bottomRight.y += change;
+}
+function changeWidthAndHeight(rect: Rectangle, widthChange: number, heightChange: number): void {
+    changeWidth(rect, widthChange);
+    changeHeight(rect, heightChange);
+}
+function moveX(rect: Rectangle, shiftX: number): void {
+    rect.topLeft.x += shiftX;
+    rect.bottomRight.x += shiftX;
+}
+function moveY(rect: Rectangle, shiftY: number): void {
+    rect.topLeft.y += shiftY;
+    rect.bottomRight.y += shiftY;
+}
+function moveXY(rect: Rectangle, shiftX: number, shiftY: number): void {
+    moveX(rect, shiftX);
+    moveY(rect, shiftY);
+}
+function isPointInside(rect: Rectangle, point: { x: number, y: number }): boolean {
+    return point.x >= rect.topLeft.x && point.x <= rect.bottomRight.x && point.y >= rect.topLeft.y && point.y <= rect.bottomRight.y;
+}
+let rectangle: Rectangle = {
+    topLeft: { x: 0, y: 0 },
+    bottomRight: { x: 5, y: 5 }
+}
+getRectangleInfo(rectangle);
+// console.log("Ширина:", getWidth(rectangle));
+// console.log("Высота:", getHeight(rectangle));
+// console.log("Площадь:", getArea(rectangle));
+// console.log("Периметр:", getPerimeter(rectangle));
+// changeWidth(rectangle, 3);
+// console.log("Новая ширина:", getWidth(rectangle));
+// changeHeight(rectangle, 2);
+// console.log("Новая высота:", getHeight(rectangle));
+// changeWidthAndHeight(rectangle, 2, 1);
+// console.log("Новая ширина:", getWidth(rectangle));
+// console.log("Новая высота:", getHeight(rectangle));
+// moveXY(rectangle, 1, -1);
+// getRectangleInfo(rectangle);
+// console.log("Точка (3, 3) находится внутри прямоугольника?", isPointInside(rectangle, { x: 3, y: 3 }));
+
+const rectElement = document.getElementById('rect') as HTMLDivElement
+function initRect(rect: Rectangle, rectEl: HTMLDivElement) {
+  rectEl.style.width = getWidth(rect)*10+'px'
+  rectEl.style.height = getHeight(rect)*10+'px'
+  rectEl.style.top = rect.topLeft.y+'px'
+  rectEl.style.left = rect.topLeft.x+'px'
+}
+initRect(rectangle, rectElement)
+
+const topLeftButton = document.getElementById('topLeft') as HTMLDivElement
+const topButton = document.getElementById('top') as HTMLDivElement
+const topRightButton = document.getElementById('topRight') as HTMLDivElement
+const leftButton = document.getElementById('left') as HTMLDivElement
+const rightButton = document.getElementById('right') as HTMLDivElement
+const bottomLeftButton = document.getElementById('bottomLeft') as HTMLDivElement
+const bottomButton = document.getElementById('bottom') as HTMLDivElement
+const bottomRightButton = document.getElementById('bottomRight') as HTMLDivElement
+
+const addHeightButton = document.getElementById('addHeight') as HTMLDivElement
+const addWidthButton = document.getElementById('addWidth') as HTMLDivElement
+const reduceHeightButton = document.getElementById('reduceHeight') as HTMLDivElement
+const reduceWidthButton = document.getElementById('reduceWidth') as HTMLDivElement
+
+addHeightButton.addEventListener('click', ()=>{
+  changeHeight(rectangle, 1)
+  initRect(rectangle, rectElement)
+})
+reduceHeightButton.addEventListener('click', ()=>{
+  changeHeight(rectangle, -1)
+  initRect(rectangle, rectElement)
+})
+addWidthButton.addEventListener('click', ()=>{
+  changeWidth(rectangle, 1)
+  initRect(rectangle, rectElement)
+})
+reduceWidthButton.addEventListener('click', ()=>{
+  changeWidth(rectangle, -1)
+  initRect(rectangle, rectElement)
+})
+
+topLeftButton.addEventListener('click', ()=>{
+  moveXY(rectangle, -10, -10)
+  initRect(rectangle, rectElement)
+})
+topButton.addEventListener('click', ()=>{
+  moveY(rectangle, -10)
+  initRect(rectangle, rectElement)
+})
+topRightButton.addEventListener('click', ()=>{
+  moveXY(rectangle, 10, -10)
+  initRect(rectangle, rectElement)
+})
+leftButton.addEventListener('click', ()=>{
+  moveX(rectangle, -10)
+  initRect(rectangle, rectElement)
+})
+rightButton.addEventListener('click', ()=>{
+  moveX(rectangle, 10)
+  initRect(rectangle, rectElement)
+})
+bottomLeftButton.addEventListener('click', () => {
+  moveXY(rectangle, -10, 10)
+  initRect(rectangle, rectElement)
+})
+bottomButton.addEventListener('click', () => {
+  moveY(rectangle, 10)
+  initRect(rectangle, rectElement)
+})
+bottomRightButton.addEventListener('click', () => {
+  moveXY(rectangle, 10, 10)
+  initRect(rectangle, rectElement)
+})

@@ -5,10 +5,77 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite +/- TS</title>
+    <style>
+      #canvas {
+        height: 800px;
+        width: 800px;
+        position: relative;
+      }
+      #rect {
+        position: absolute;
+        background-color: blueviolet;
+        transition: 1s;
+      }
+      .numpad {
+        display: grid;
+        grid-template-columns: 50px 50px 50px;
+        grid-template-rows: 50px 50px 50px 50px 50px 50px;
+        gap: 10px;
+        user-select: none;
+      }
+      .numpad div {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .numpad div div {
+        width: 18;
+      } 
+      .button {
+        border-radius: 10px;
+        border: 1px black solid;
+        transition: 0.1s;
+      }
+      .button:hover {
+        background-color: rgb(187, 193, 193);
+        transition: 0.1s;
+      }
+      .button:active {
+        background-color: rgb(88, 105, 113);
+        transition: 0.1s;
+      }
+    </style>
   </head>
   <body>
     <img src="vite.svg" alt="">
     New project
+    <div style="display: flex;">
+      <div id="canvas">
+        <div id="rect" style="top: 0; left:0">
+
+        </div>
+      </div>
+      <div class="numpad">
+        <div class="button" id="topLeft"><div style="transform: rotate(-135deg); position: relative;">-&gt;</div></div>
+        <div class="button" id="top"><div style="transform: rotate(-90deg);">-&gt;</div></div>
+        <div class="button" id="topRight"><div style="transform: rotate(-45deg);">-&gt;</div></div>
+        <div class="button" id="left">&lt;-</div>
+        <div></div>
+        <div class="button" id="right">-&gt;</div>
+        <div class="button" id="bottomLeft"><div style="transform: rotate(135deg); position: relative;">-&gt;</div></div>
+        <div class="button" id="bottom"><div style="transform: rotate(90deg);">-&gt;</div></div>
+        <div class="button" id="bottomRight"><div style="transform: rotate(45deg);">-&gt;</div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div class="button" id="addHeight"><div style="transform: rotate(-90deg); position: relative;">&lt;-&gt;</div></div>
+        <div></div>
+        <div class="button" id="addWidth">&lt;-&gt;</div>
+        <div class="button" id="reduceHeight"><div style="transform: rotate(-90deg); position: relative;">&gt;-&lt;</div></div>
+        <div></div>
+        <div class="button" id="reduceWidth">&gt;-&lt;</div>
+      </div>
+    </div>
     <div id="app"></div>
     <script type="module" src="/src/main.ts"></script>
     <script>
