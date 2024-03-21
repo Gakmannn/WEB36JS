@@ -877,3 +877,141 @@ bottomRightButton.addEventListener('click', () => {
   moveXY(rectangle, 10, 10)
   initRect(rectangle, rectElement)
 })
+
+{
+
+  let a:number 
+  a = 1
+  const b:string = 'a'
+  console.log(b == 'b')
+
+  let c = 143612
+  let d = 'adasddas'
+  const z = 'fdsdsdffsd'
+
+  type MyVars = {
+    a: number,
+    b: string,
+    c: number,
+    d?: string,
+    z?: string,
+    da?: number,
+  }
+
+  const myVars:MyVars = {
+    'a': a, 
+    b:b,
+    c,
+    d,
+    z,
+  }
+  
+  console.log(myVars)
+  console.log(myVars.a)
+  console.log(myVars['b'])
+  delete myVars.d
+  delete myVars['z']
+  console.log(myVars)
+  myVars.d = '3132'
+  console.log(myVars)
+  myVars.da = 3132
+  console.log(myVars)
+
+  function getMySum(a:number,b:number) {
+    console.log(a,b)
+    return a + b
+  }
+  function getMyConcat(a:string,b:string) {
+    return a + ' ' + b
+  }
+
+  console.log(getMySum(5,5))
+  console.log(getMyConcat('5','sdfsdfsd'))
+
+  function getSumOfAllNumbersInObjectAndN(obj:MyVars, n:number) {
+    return obj.da ? obj.a + obj.c + obj.da + n : obj.a + obj.c + n
+  }
+
+  const obj2:MyVars = {
+    a: 54,
+    b: '14365',
+    c: 646
+  }
+
+  console.log(getSumOfAllNumbersInObjectAndN(myVars, 5))
+  console.log(getSumOfAllNumbersInObjectAndN(obj2, 55))
+
+  console.log([])
+  console.log([
+    0,
+    3,
+    1,
+    2,
+  ])
+  console.log(new Array(5))
+  
+  const myArr = ['d','sdf','sdfsd']
+  console.log(myArr)
+  for (let el of myArr) {
+    console.log(el)
+  }
+  for (let i=0;i<myArr.length;i++) {
+    console.log(i, myArr[i])
+  }
+  
+  console.log(myArr.push('sdfsdf','sdfs'))
+  console.log(myArr)
+  
+  console.log(myArr.pop())
+  console.log(myArr)
+
+  console.log(myArr.unshift('1','342'))
+  console.log(myArr)
+  
+  
+  console.log(myArr.shift())
+  console.log(myArr)
+  
+  myArr[3] = ''
+  console.log(myArr)
+  
+  delete myArr[3]
+  console.log(myArr)
+  
+  // полная копия массива
+  const arr1 = myArr.slice()
+  console.log(arr1)
+  
+  // копия массива со 2 индекса до 4 не включая 4
+  const arr2 = myArr.slice(2,4)
+  console.log(arr2)
+  
+  // начиная с 3его индекса, удалить 1 элемент
+  const arr3 = myArr.splice(3,1)
+  console.log(arr3)
+  console.log(myArr)
+
+  if (arr1) {
+    console.log('массив существует')
+  }
+  
+  if (arr1.length) {
+    console.log('в массиве есть данные в количестве ' + arr1.length )
+  }
+  
+  if ([].length) {
+    console.log('в массиве есть данные' )
+  } else {
+    console.log('в массиве нет данных' )
+  }
+
+
+  function addToArray(arr:string[], index:number, newEl:string) {
+    arr.splice(index, 0, newEl)
+    return arr
+  }
+
+  console.log(myArr)
+  console.log(addToArray(myArr, 2, 'newEl: string'))
+  
+}
