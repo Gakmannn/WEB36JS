@@ -1015,3 +1015,232 @@ bottomRightButton.addEventListener('click', () => {
   console.log(addToArray(myArr, 2, 'newEl: string'))
   
 }
+
+// Создать массив «Список покупок». Каждый элемент массива
+// является объектом, который содержит название продукта, необ -
+// ходимое количество и куплен или нет.Написать несколько функ -
+// ций для работы с таким массивом.
+
+type product = {
+  name: string,
+  count: number,
+  isBuyed: boolean,
+}
+
+// const strArr:boolean[]=['dasd',1,{},true]
+
+const toBuyList:product[] = [
+  {name: 'молоко', count:1, isBuyed: true},
+  {name: 'картофель', count:1, isBuyed: false},
+  {name: 'макароны', count:1, isBuyed: false},
+  {name: 'сыр', count:1, isBuyed: true},
+  {name: 'хлеб', count:1, isBuyed: false},
+]
+
+// 1  Вывод всего списка на экран таким образом, чтобы сначала
+// шли некупленные продукты, а потом – купленные.
+const toBuyListOL = document.getElementById('toBuyList') as HTMLOListElement
+// console.log(toBuyListOL)
+
+function renderBuyList(arr:product[]) {
+  let html = ''
+  for (let el of arr) {
+    if (!el.isBuyed) {
+      html += `<li style="color:red">${el.name} ${el.count} <button data-name="${el.name}">Отметить купленным</button></li>`
+    }
+  }
+  for (let el of arr) {
+    if (el.isBuyed) {
+      html += `<li style="color:green">${el.name} ${el.count}</li>`
+    }
+  }
+  toBuyListOL.innerHTML = html
+}
+
+renderBuyList(toBuyList)
+
+// 2 Добавление покупки в список.Учтите, что при добавлении
+// покупки с уже существующим в списке продуктом, необ -
+// ходимо увеличивать количество в существующей покупке,
+// а не добавлять новую.
+
+const productNameInput = document.getElementById('productName') as HTMLInputElement
+const productCountInput = document.getElementById('productCount') as HTMLInputElement
+const addProductButton = document.getElementById('addProduct') as HTMLButtonElement
+
+function addToBuyList(arr:product[], name:string, count:number) {
+  let inList = false
+  for (let el of arr) {
+    if (el.name == name && !el.isBuyed) {
+      el.count+=count
+      inList = true
+    }
+  }
+  if (!inList) {
+    arr.push({name, count, isBuyed:false})
+  }
+  renderBuyList(arr)
+}
+addToBuyList(toBuyList, 'картофель', 2)
+
+addProductButton.addEventListener('click', function() {
+  const count = parseFloat(productCountInput.value.replace(',', '.'))
+  addToBuyList(toBuyList, productNameInput.value, count)
+  productNameInput.value = ''
+  productCountInput.value = ''
+})
+
+// 3 Покупка продукта.Функция принимает название продукта
+// и отмечает его как купленный.
+
+const setBuyedButton = document.getElementById('setBuyed') as HTMLButtonElement
+
+function setBuyed(arr: product[], name: string) {
+  for (let el of arr) {
+    if (el.name == name) {
+      el.isBuyed = true
+    }
+  }
+  renderBuyList(arr)
+}
+
+setBuyed(toBuyList, 'картофель')
+
+setBuyedButton.addEventListener('click', function() {
+  setBuyed(toBuyList, productNameInput.value)
+  productNameInput.value = ''
+  productCountInput.value = ''
+})
+
+toBuyListOL.addEventListener('click', function(e) {
+  const target = e.target as HTMLElement
+  if (target.tagName == 'BUTTON' && target.dataset.name) {
+    setBuyed(toBuyList, target.dataset.name)
+  }
+})
+
+
+// Создать массив из 10 случайных чисел.
+// Создать еще один массив из 5 случайных чисел и написать
+// следующие функции.
+
+const arr1: number[] = [0, 4, 6, 5, 8, 5, 3, 3, 8, 0]
+const arr2: number[] = [5, 8, 1, 9, 3]
+
+// function fillArrayRandomNumbers(arr:number[], length:number) {
+//   for (let i=0; i<length; i++) {
+//     arr.push(Math.floor(Math.random()*10))
+//   }
+// }
+
+// fillArrayRandomNumbers(arr1, 10)
+// fillArrayRandomNumbers(arr2, 5)
+
+console.log(arr1)
+console.log(arr2)
+console.log(arr2.includes(0))
+
+// 1 Функция принимает 2 массива и возвращает новый массив, 
+// в котором собраны все элементы из двух массивов без повторений.
+
+function getUnionArray(arr1: number[], arr2: number[]) {
+  const arr:number[] = []
+  for (let el of arr1) {
+    if (!arr.includes(el)) {
+      arr.push(el)
+    }
+  }
+  for (let el of arr2) {
+    if (!arr.includes(el)) {
+      arr.push(el)
+    }
+  }
+  return arr
+}
+
+console.log(getUnionArray(arr1,arr2))
+
+// 2 Функция принимает 2 массива и возвращает новый массив,
+//   в котором собраны общие элементы(то есть элементы,
+//   которые встречаются и в первом и во втором массивах)
+//   без повторений.
+
+function getCommonUnionArray(arr1: number[], arr2: number[]) {
+  const arr: number[] = []
+  for (let el of arr1) {
+    if (arr1.includes(el) && arr2.includes(el)) {
+      if (!arr.includes(el)) {
+        arr.push(el)
+      }
+    }
+  }
+  return arr
+}
+
+console.log(getCommonUnionArray(arr1, arr2))
+
+// 3 Функция принимает 2 массива и возвращает новый мас -
+//   сив, в котором собраны все элементы из первого массива,
+//   которых нет во втором массиве.
+
+function getNotCommonUnionArray(arr1: number[], arr2: number[]) {
+  const arr: number[] = []
+  for (let el of arr1) {
+    if (!arr2.includes(el)) {
+      if (!arr.includes(el)) {
+        arr.push(el)
+      }
+    }
+  }
+  return arr
+}
+
+console.log(getNotCommonUnionArray(arr1, arr2))
+
+// Создать массив css - стилей(цвет, размер шрифта, выравнива -
+// ние, подчеркивание и т.д.).Каждый элемент массива – это объ -
+// ект, состоящий из двух свойств: название стиля и значение стиля.
+// Написать функцию, которая принимает массив стилей и
+// текст, и выводит этот текст с помощью document.write() в тегах
+// < p > </>, добавив в открывающий тег атрибут style со всеми сти-
+// лями, перечисленными в массиве.
+
+const styles = [
+  {color:'red'},
+  {'font-size':'20px'},
+  {'text-align':'center'},
+]
+const styles2 = [
+  {color:'green'},
+  {'font-size':'16px'},
+  {'text-align':'center'},
+]
+
+const renderTextDiv = document.getElementById('renderText') as HTMLDivElement
+
+function renderText(styles:any[], text:string) {
+  let styleText = ''
+  for (let el of styles) {
+    for (let key in el) {
+      styleText += `${key}:${el[key]};`
+    }
+  }
+  const tagString = `<p style="${styleText}">${text}</p>`
+  // renderTextDiv.insertAdjacentHTML('beforeend', tagString)
+  renderTextDiv.innerHTML+=tagString
+}
+
+renderText(styles, 'test1')
+renderText(styles2, 'test2')
+
+
+const PZ22z2Div = document.getElementById('PZ22z2') as HTMLDivElement
+PZ22z2Div.innerHTML = `
+<p>hdgkjdgjdf</p>
+<p>hdgkjdgjdf</p>
+`
+const PZ22z3Div = document.getElementById('PZ22z3') as HTMLDivElement
+PZ22z3Div.innerHTML = `
+<p>3333hdgkjdgjdf</p>
+<p>444hdgkjdgjdf</p>
+`

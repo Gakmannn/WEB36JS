@@ -47,8 +47,23 @@
     </style>
   </head>
   <body>
+
     <img src="vite.svg" alt="">
     New project
+    <div id="renderText"></div>
+    <div style="display: flex;">
+      <ol id="toBuyList"></ol>
+      <div style="margin: 20px;">
+        <input type="text" id="productName" placeholder="название продукта">
+        <br>
+        <input type="text" id="productCount" placeholder="количество">
+        <br>
+        <button id="addProduct">Добавить</button>
+        <br>
+        <button id="setBuyed">Отметить купленным</button>
+      </div>
+    </div>
+
     <div style="display: flex;">
       <div id="canvas">
         <div id="rect" style="top: 0; left:0">
@@ -77,11 +92,19 @@
       </div>
     </div>
     <div id="app"></div>
+
+    <p>PZ22z2</p>
+    <div id="PZ22z2"></div>
+    <p>PZ22z3</p>
+    <div id="PZ22z3"></div>
+
+
     <script type="module" src="/src/main.ts"></script>
     <script>
       console.log(1=='1')
       console.log(1==='1')
     </script>
+
   </body>
 </html>
 
