@@ -1244,3 +1244,179 @@ PZ22z3Div.innerHTML = `
 <p>3333hdgkjdgjdf</p>
 <p>444hdgkjdgjdf</p>
 `
+
+
+{
+
+  // !Метод arr.concat создаёт новый массив, в который копирует данные из других массивов и дополнительные значения
+  let arr = [1, 2]
+
+  // создать массив из: arr и [3,4]
+  console.log(arr.concat([3, 4]))
+
+  // создать массив из: arr и [3,4] и [5,6]
+  console.log(arr.concat([3, 4], [5, 6]))
+
+  // создать массив из: arr и [3,4], потом добавить значения 5 и 6
+  console.log(arr.concat([3, 4], 5, 6))
+  console.log(arr)
+  
+  console.log(Math.PI)
+  
+  let text = ''
+  toBuyList.forEach(function (el,i,arr) {
+    if (i%2==0) {
+      text+=`${el.name}, ${el.count}; `
+    }
+  })
+  console.log(text)
+
+  function forEach(arr:any[], func:Function) {
+    for (let i=0; i<arr.length; i++) {
+      func(arr[i], i, arr)
+    }
+  }
+
+  forEach(toBuyList, function (el:any, i:number) {
+    if (i % 2 == 0) {
+      text += `${el.name}, ${el.count}`
+    }
+  })
+  forEach(toBuyList, (el:any, i:number) => {
+    if (i % 2 == 0) {
+      text += `${el.name}, ${el.count}`
+    }
+  })
+  console.log(text)
+
+  const arrN = [1,2,1,2,4,5,7, NaN,1,5,1]
+  
+  // !arr.indexOf(item, from) ищет item начиная с индекса from и возвращает номер индекса, на котором был найден искомый элемент, в противном случае - 1.
+  
+  console.log(arrN.indexOf(1))
+  console.log(arrN.indexOf(1,5))
+  console.log(arrN.indexOf(NaN))
+  
+  // Если в массиве есть значение 7, вывести его индекс
+  const index = arrN.indexOf(7)
+  if (index>=0) {
+  // if (index!=-1) {
+    console.log(`Значение 7 находится на ${index} позиции`)
+  }
+
+  console.log(arrN.lastIndexOf(1))
+  console.log(arrN.lastIndexOf(1,5))
+  
+  // !arr.includes(item, from) ищет item начиная с индекса from и возвращает true, если поиск успешен.
+  
+  console.log(arrN.includes(8))
+  console.log(arrN.includes(7))
+  console.log(arrN.includes(7,8))
+  console.log(arrN.includes(NaN))
+
+  console.log(toBuyList)
+  // если true - возвращается текущий элемент и перебор прерывается
+  // если все итерации оказались ложными, возвращается undefined
+  let result = toBuyList.find(function (item, index, array) {
+    return item.isBuyed
+  })
+  console.log(result)
+  
+  // возвращает номер индекса, первого элемента для которого функция вернула true, в противном случае - 1
+  let i = toBuyList.findIndex(function (item, index, array) {
+    return item.count>5
+  })
+  console.log(i)
+  
+  // возвращает номер индекса, первого элемента с конца массива для которого функция вернула true, в противном случае - 1
+  i = toBuyList.findLastIndex(function (item, index, array) {
+    return item.isBuyed
+  })
+  i = toBuyList.findLastIndex(item => item.isBuyed)
+  console.log(i)
+  
+  // если `true` -- элемент добавляется к results и перебор продолжается
+  // возвращается пустой массив в случае, если ничего не найдено
+  let results = toBuyList.filter(function (el, i) {
+    return !el.isBuyed
+  })
+  console.log(results)
+  
+  let html = ''
+  toBuyList.filter(el => !el.isBuyed).forEach(el=>{
+    html+=`<p>${el.name} ${el.count}</p>`
+  })
+  toBuyList.filter(el => el.isBuyed).forEach(el=>{
+    html+=`<p>${el.name} ${el.count}</p>`
+  })
+
+  console.log(html)
+  
+  html = ''
+  console.log(+true)
+  console.log(+false)
+  toBuyList.sort((a, b) => +a.isBuyed - +b.isBuyed).forEach(el => {
+    html += `<p>${el.name} ${el.count}</p>`
+  })
+
+  // Map вызывает функцию для каждого элемента массива и возвращает массив результатов выполнения этой функции.
+  // let result = arr.map(function (item, index, array) {
+    // возвращается новое значение вместо элемента
+  // });
+
+  console.log(toBuyList.map(el => el.name))
+  console.log(toBuyList.map(el => el.count))
+  console.log(toBuyList.map(el => el.isBuyed))
+  console.log(toBuyList.map(el => `<p>${el.name} ${el.count}</p>`))
+  console.log(toBuyList.map(el => `<p>${el.name} ${el.count}</p>`).join(''))
+  console.log(toBuyList)
+  console.log(html)
+
+  console.log(toBuyList.map(function (el) {
+    let str = ''
+    str += '***' + el.name + '***'
+    return str
+  }))
+  console.log(toBuyList.map(el => '***' + el.name + '***'))
+  console.log(toBuyList.map(el => {
+    let str = ''
+    str += '***' + el.name + '***'
+    return str
+  }))
+
+  // Стрелочная функция - это короткий и лаконичный тип записи анонимной функции
+  // Если у стрелочной функции нет фигурных скобок,- она неявно возвращает значение указанное после стрелки
+  console.log(toBuyList.map(el => el.name))
+  // Если у стрелочной функции есть фигурные скобки, то возврат значения надо делать явно
+  console.log(toBuyList.map(el => {return el.name}))
+  // Если у стрелочной функции 0 или больше одного параметра, то необходимо ставить круглые скобки
+  console.log(toBuyList.map(() => 'секрет'))
+  console.log(toBuyList.map((el,i) => `${el.name}, индекс ${i}` ))
+
+  console.log([1,2,3,4,5,6].map(el=>el*10))
+
+  let arrZ = [1, 2, 15, 32,15, 12, 31,32]
+  
+  function compareNumeric(a:number, b:number) {
+    console.log(a,b)
+    if (a > b) return 1
+    if (a < b) return -1
+    return 0
+  }
+
+  console.log(arrZ.sort(compareNumeric))
+
+  console.log(arrZ.sort((a,b)=>a-b))
+  console.log(arrZ.sort((a,b)=>b-a))
+  
+  console.log(['a','sd','t'].reverse())
+  console.log(['a', 't', 'sd'].sort((a, b) => a.localeCompare(b)))
+  
+  let names = 'Вася, Петя, Маша'
+  
+  const namesArr = names.split(', ')
+  console.log(namesArr)
+  console.log(namesArr.join('; '))
+  
+
+}

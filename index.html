@@ -101,6 +101,17 @@
 
     <script type="module" src="/src/main.ts"></script>
     <script>
+
+      function itsPublic() {
+        if (isAdmin) {
+          console.log('Secret info')
+        } else {
+          console.log('Shhhh....')
+        }
+      }
+
+      isAdmin = false
+
       console.log(1=='1')
       console.log(1==='1')
     </script>
