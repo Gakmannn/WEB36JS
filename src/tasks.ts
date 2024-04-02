@@ -18,6 +18,11 @@ console.log(generateArray(20,50))
 // 2.4. Написать функцию, которая возвращает текст "Привет, пользователь" или "Привет, <имяПользователя>" в зависимости от переданных параметров и использовать её в задании 2.3.
 
 // Есть массив объектов
+type Employee = {
+  name: string,
+  department: string,
+  salary: number
+} 
 const employees = [
   { name: 'Федотова Арина Глебовна', department: 'ads', salary: 2100 },
   { name: 'Голикова Мария Филипповна', department: 'prog', salary: 3500 },
@@ -29,6 +34,23 @@ const employees = [
   { name: 'Мухина Айша Константиновна', department: 'disign', salary: 2100 },
 ]
 
+function showElements(arr:Employee[]) {
+  console.log(arr)
+  console.log(arr[0])
+  console.log(arr[0].name)
+  console.log(arr[0].department)
+  console.log(arr[0].salary)
+  for (let i=0;i<arr.length; i++) {
+    console.log(arr[i].name)
+  }
+  for (let empl of arr) {
+    console.log(empl.name)
+  }
+  const newArr = [4,45,6]
+  return newArr
+}
+const вернулаФункция = showElements(employees)
+console.log(вернулаФункция)
 
 
 
