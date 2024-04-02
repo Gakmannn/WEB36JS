@@ -1239,6 +1239,9 @@ PZ22z2Div.innerHTML = `
 <p>hdgkjdgjdf</p>
 <p>hdgkjdgjdf</p>
 `
+
+
+// Получение объекта элемента по id
 const PZ22z3Div = document.getElementById('PZ22z3') as HTMLDivElement
 PZ22z3Div.innerHTML = `
 <p>3333hdgkjdgjdf</p>
@@ -1406,10 +1409,16 @@ PZ22z3Div.innerHTML = `
 
   console.log(arrZ.sort(compareNumeric))
 
+  // Получение объекта элемента по id
+  const PZ22z3Div = document.getElementById('PZ22z3') as HTMLDivElement
+  
+
+  // Сравнение чисел
   console.log(arrZ.sort((a,b)=>a-b))
   console.log(arrZ.sort((a,b)=>b-a))
   
   console.log(['a','sd','t'].reverse())
+  // Сравнение строк
   console.log(['a', 't', 'sd'].sort((a, b) => a.localeCompare(b)))
   
   let names = 'Вася, Петя, Маша'
