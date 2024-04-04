@@ -1429,3 +1429,142 @@ PZ22z3Div.innerHTML = `
   
 
 }
+
+console.log(Boolean(0))
+console.log(!!0)
+console.log(!![].length)
+console.log(!![14].length)
+
+{
+  const arr = [1,2,3,5,4,6]
+  while (arr.length) {
+    let a = arr.shift()
+    console.log(a)
+  }
+  const arr2 = [4,5,6]
+  arr.push(1,2,3)
+  console.log(arr)
+  arr.push(...arr2)
+  console.log(arr)
+  arr.unshift(3,2,1)
+  console.log(arr)
+  arr.unshift(...arr2.reverse())
+  console.log(arr)
+
+  console.log(arr.slice())
+  console.log(arr.slice(6))
+  console.log(arr.slice(9,11))
+  console.log(arr.slice(0,6))
+  
+  console.log(arr.splice(6, 0, 0))
+  console.log(arr)
+
+  const arr3 = [1,2,3,4,5]
+  arr3.fill(5)
+  console.log(arr3)
+
+  // !Методы изменяющие массив
+  // pop, push, shift, unshift, splice, sort, reverse, fill
+  // !Методы не изменяющие массив
+  // slice, concat
+
+  function indexOf(arr:any[],val:any,j=0):number {
+    for (let i=j; i < arr.length; i++) {
+      if (arr[i]==val) return i
+    }
+    return -1
+  }
+
+  console.log(indexOf(arr,4))
+
+  function lastIndexOf(arr:any[], val:any) {
+    let i = arr.indexOf(val, 0)
+    let lastIndex = i
+    while (i!=-1) {
+      i = arr.indexOf(val, i+1)
+      if (i != -1) lastIndex = i
+    }
+    return lastIndex
+  }
+  console.log(lastIndexOf(arr, 5))
+  
+  arr.push(...arr3)
+
+  function allIndexOf(arr:any[], val:any) {
+    let i = arr.indexOf(val, 0)
+    let lastIndex = [i]
+    while (i!=-1) {
+      i = arr.indexOf(val, i+1)
+      if (i != -1) lastIndex.push(i)
+    }
+    return lastIndex
+  }
+  console.log(allIndexOf(arr, 5))
+
+  // Методы для массивов примитивов (всего, кроме объектов)
+  // indexOf/lastIndexOf и includes
+
+  // Методы для массивов объектов
+  // find и findIndex/findLastIndex, filter
+
+  // @ts-ignore
+  console.log({a:1}=={a:1})
+
+  const objArr = [
+    {a:1},
+    {a:2},
+    { a: 5, b: 4 },
+    {a:3},
+    { a: 5, b: 5},
+    {a:4},
+    { a: 5, b: 6},
+    {a:6},
+    {a:5,b:7},
+  ]
+
+  const findedObj = objArr.find((el)=>el.a==5 && el.b==7)
+  console.log(findedObj)
+  
+  const findedObjs = objArr.filter((el)=>el.a==5 )
+  console.log(findedObjs)
+
+
+  type Employee = {
+    name: string,
+    department: string,
+    salary: number
+  }
+  const employees: Employee[] = [
+    { name: 'Федотова Арина Глебовна', department: 'ads', salary: 2100 },
+    { name: 'Голикова Мария Филипповна', department: 'prog', salary: 3500 },
+    { name: 'Панин Александр Германович', department: 'ads', salary: 2100 },
+    { name: 'Романов Эмиль Макарович', department: 'prog', salary: 3100 },
+    { name: 'Смирнов Никита Александрович', department: 'prog', salary: 3800 },
+    { name: 'Александрова Майя Вячеславовна', department: 'prog', salary: 4500 },
+    { name: 'Крылов Богдан Максимович', department: 'disign', salary: 2100 },
+    { name: 'Мухина Айша Константиновна', department: 'disign', salary: 2100 },
+  ]
+
+  const newArr = employees.map(el => el.name.split(' ')[1] + ' ' + el.name.split(' ')[2] )
+  console.log(newArr)
+  
+  newArr.sort((a, b) => a.split(' ')[1].localeCompare(b.split(' ')[1]))
+  
+  console.log(newArr)
+
+
+  let sum = arr3.reduce((sum, item) => sum+=item,0)
+  let mul = arr3.reduce((acc, item) => acc*=item)
+  let div = arr3.reduce((div, item) => div/=item)
+  console.log(sum)
+  console.log(mul)
+  console.log(div)
+  let allSalary = employees.reduce((sum, el) => sum+=el.salary,0)
+  console.log(allSalary)
+  let allSalaryStr = employees.reduce((sum, el) => sum+=el.salary+' ','')
+  console.log(allSalaryStr)
+ 
+  console.log(arr3.some(el=>el%2==1))
+  console.log(arr3.every(el=>el%2==1))
+
+}

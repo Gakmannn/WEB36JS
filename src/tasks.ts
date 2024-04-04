@@ -23,7 +23,7 @@ type Employee = {
   department: string,
   salary: number
 } 
-const employees = [
+const employees: Employee[] = [
   { name: 'Федотова Арина Глебовна', department: 'ads', salary: 2100 },
   { name: 'Голикова Мария Филипповна', department: 'prog', salary: 3500 },
   { name: 'Панин Александр Германович', department: 'ads', salary: 2100 },
