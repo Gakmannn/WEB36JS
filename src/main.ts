@@ -1563,6 +1563,8 @@ console.log(!![14].length)
   console.log(allSalary)
   let allSalaryStr = employees.reduce((sum, el) => sum+=el.salary+' ','')
   console.log(allSalaryStr)
+  let allSalaryStr1 = employees.reduce((sum, el) => Object.assign(sum, { [el.name]:el.salary }),{} as any)
+  console.log(allSalaryStr1)
  
   console.log(arr3.some(el=>el%2==1))
   console.log(arr3.every(el=>el%2==1))
