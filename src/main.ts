@@ -1844,4 +1844,17 @@ console.log(!![14].length)
   console.log('Ослик Иа - Иа посмотрел на виадук'.replaceAll('Иа', 'AI'))
 
 
+  function checkPalindrom(str:string) {
+    str = str.toLowerCase()
+    return str == str.split('').reverse().join('')
+  }
+
+  console.log(checkPalindrom('Алла'))
+  console.log(checkPalindrom('папа'))
+  console.log(checkPalindrom('1221'))
+  console.log(checkPalindrom('12521'))
+  console.log('папа'.split(''))
+  console.log('папа'.split('').reverse())
+  console.log('папа'.split('').reverse().join(''))
+
 }
