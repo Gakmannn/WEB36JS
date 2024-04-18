@@ -1809,6 +1809,11 @@ console.log(!![14].length)
     str += String.fromCodePoint(i)
   }
   console.log(str)
+  str = ''
+  for (let i = 1; i <= 310; i++) {
+    str += String.fromCodePoint(i)
+  }
+  console.log(str)
   
   // !Правильное сравнение
   // «Правильный» алгоритм сравнения строк сложнее, чем может показаться, так как разные языки используют разные алфавиты.
@@ -1856,5 +1861,241 @@ console.log(!![14].length)
   console.log('папа'.split(''))
   console.log('папа'.split('').reverse())
   console.log('папа'.split('').reverse().join(''))
+
+  function sayDigitName(d:number) {
+    // if (0==d) return 'Да это ж ноль'
+    if (Object.is(-0, d)) {
+      return 'минус ноль'
+    }
+    return 'ноль'
+  }
+  console.log(sayDigitName(0))
+  console.log(sayDigitName(-0))
+}
+
+// !Значение this – это объект «перед точкой», который используется для вызова метода.
+// «this» не является фиксированным
+// Значение this вычисляется во время выполнения кода, в зависимости от контекста.
+function sayHi() {
+  // @ts-ignore
+  return (this?.name)
+}
+// Вызов без объекта: this == undefined
+console.log(sayHi())
+
+const user1 = {
+  name: '1',
+  sayHi: sayHi,
+}
+console.log(user1.sayHi())
+
+const user2 = {
+  name: 2,
+  sayHi: sayHi,
+}
+console.log(user2.sayHi())
+// нет разницы между использованием точки или квадратных скобок для доступа к объекту
+console.log(user2['sayHi']())
+
+// У стрелочных функций нет «this»
+// стрелочные функции являются особенными – у них нет this. Когда внутри стрелочной функции обращаются к this, то его значение берётся извне
+// let user = {
+//   firstName: "Ilya",
+// !Рекомендованный способ записи методов
+//   sayHi() {
+//     let arrow = () => console.log(this.firstName)
+//     arrow()
+//   }
+// }
+
+// В стрелочных функциях нет совоего this
+let user = {
+  firstName: "Ilya",
+  // @ts-ignore
+  sayHi: () => console.log(this?.firstName)
+}
+
+user.sayHi()
+
+let a1 = 'sfdfsdf'.split('').reverse().join('').toLowerCase()
+console.log(a1)
+
+let ladder = {
+  step: 0,
+  up() {
+    this.step++
+    return this
+  },
+  down() {
+    this.step--
+    return this
+  },
+  showStep: function () { // показывает текущую ступеньку
+    console.log(this.step)
+    return this
+  }
+}
+
+ladder.up().up().down().showStep().down().showStep().down()
+
+{
+  // Идентичные записи
+  // let func = (arg1, arg2, ...argN) => expression
+  // let func = function (arg1, arg2, ...argN) {
+  //   return expression
+  // };
+
+  const func = (a: number, b: number) => a + b
+  console.log(func(1,1))
+
+  console.log([1, 2, 3].reduce((a, el) => a + el))
+  console.log([
+    {name:1},
+    {name:2},
+    {name:3},
+    ].map(a => a.name))
+
+
+// Стрелочные функции:
+// Не имеют this.
+// Не имеют arguments.
+// Не могут быть вызваны с new.
+// У них также нет super
+// Всё это потому, что они предназначены для небольшого кода, который не имеет своего «контекста», выполняясь в текущем.И они отлично справляются с этой задачей!
+}
+
+{
+  // Опциональная цепочка ?. — это безопасный способ доступа к свойствам вложенных объектов, даже если какое-либо из промежуточных свойств не существует
+
+  type MyVars = {
+    a: number,
+    b?: {c:number},
+  }
+
+  const arr:MyVars[] = [
+    { a: 1, b: { c: 1 } },
+    { a: 2 },
+    { a: 3, b: { c: 2 } },
+    { a: 4 },
+    { a: 5, b: { c: 3 } },
+  ]
+
+  arr.forEach(el=>{
+    // console.log(el.a, el.b?.c)
+    el.b ? console.log(el.a, el.b?.c) : console.log(el.a, el.b)
+  })
+
+//   Синтаксис опциональной цепочки?.имеет три формы:
+
+//   obj?.prop – возвращает obj.prop если obj существует, в противном случае undefined.
+//   obj?.[prop] – возвращает obj[prop] если obj существует, в противном случае undefined.
+//   obj.method?.() – вызывает obj.method(), если obj.method существует, в противном случае возвращает undefined.
+//    Как мы видим, все они просты и понятны в использовании. ?.проверяет левую часть на null / undefined и позволяет продолжить вычисление, если это не так.
+
+//    Цепочка?.позволяет безопасно получать доступ к вложенным свойствам.
+
+//    Тем не менее, мы должны использовать?.осторожно, только там, где по логике кода допустимо, что левая часть не существует.Чтобы он не скрывал от нас ошибки программирования, если они возникнут.
+
+  let user = {
+
+  } as any
+
+  // Опциональная цепочка не может использоваться слева от оператора присваивания
+  // то же самое что написать undefined = "John"
+  // Ошибка, не работает
+  // user.fullname?.name = "John"; 
+  if (user.fullname) {
+    user.fullname.name = "John"
+  }
+
+}
+
+{
+
+// Object.keys, values, entries
+// Для простых объектов доступны следующие методы:
+
+// Object.keys(obj) – возвращает массив ключей.
+// Object.values(obj) – возвращает массив значений.
+// Object.entries(obj) – возвращает массив пар[ключ, значение].
+
+  const employe = { name: 'Федотова Арина Глебовна', department: 'ads', salary: 2100 }
+
+  console.log(Object.keys(employe))
+  console.log(Object.values(employe))
+  console.log(Object.entries(employe))
+
+}
+
+{
+  // Деструктурирующее присваивание
+  // у нас есть массив с именем и фамилией
+  let arr = ["Ilya", "Kantor"]
+
+  // деструктурирующее присваивание
+  // записывает firstName = arr[0]
+  // и surname = arr[1]
+  let [firstName, surname] = arr
+
+  console.log(firstName)
+  console.log(surname)
+
+  ;[firstName, surname] = "Ilya Kantor".split(' ')
+  console.log(firstName)
+  console.log(surname)
+
+  {
+    let [firstName, , title] = ["Julius", "Caesar", "Consul", "of the Roman Republic"]
+    console.log(title)
+  }
+
+  let user = {} as any
+  ;[user.name, user.surname] = "Ilya Kantor".split(' ')
+  console.log(user.name, user.surname)
+
+  // цикл по ключам и значениям
+  for (let [key, value] of Object.entries(user)) {
+    console.log(key, value)
+  }
+
+  // Трюк обмена переменных
+  // Существует хорошо известный трюк для обмена значений двух переменных с использованием деструктурирующего присваивания:
+
+  let guest = "Jane"
+  let admin = "Pete"
+
+  // Давайте поменяем местами значения: сделаем guest = "Pete", а admin = "Jane"
+  ;[guest, admin] = [admin, guest]
+  console.log(guest, admin)
+  
+  let [name1, name2, ...rest] = ["Julius", "Caesar", "Consul", "of the Roman Republic"]
+  console.log(rest)
+  
+  {
+    // @ts-ignore
+    let [firstName, surname] = []
+    console.log(firstName, surname)
+  }
+
+  let options = {
+    title: "Menu",
+    width: 100,
+    height: 200
+  };
+
+  let { height, title, width } = options
+  console.log(title, width, height)
+  
+  // Двоеточие показывает «что : куда идёт»
+  let { width: w, height: h, title: t } = options
+  console.log(t, w, h)
+
+  {
+    let options = {
+      title: "Menu"
+    } as any
+    let { width = 100, height = 200, title } = options
+    console.log(title, width, height)
+  }
 
 }
