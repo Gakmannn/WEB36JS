@@ -2099,3 +2099,44 @@ ladder.up().up().down().showStep().down().showStep().down()
   }
 
 }
+
+{
+// Написать функцию – калькулятор. Функция принимает
+// строку с примером, определяет, какое действие необходимо
+// выполнить (+ - * /), переводит операнды в числа, решает
+// пример и возвращает результат.
+
+  function calculator(str:string):number {
+    str = str.replaceAll(' ', '')
+    if (str.includes('+')) {
+      const arr = str.split('+')
+      let sum = 0
+      arr.forEach(el => sum += +calculator(el))     
+      return sum
+    } else if (str.includes('-')) {
+      const arr = str.split('-')
+      let sum = +calculator(arr[0])
+      arr.forEach((el, i) => sum -= i ? +calculator(el) : 0)
+      return sum
+      // return +calculator(arr[0]) - (+calculator(arr[1]))
+    } else if (str.includes('*')) {
+      const arr = str.split('*')
+      let sum = 1 
+      arr.forEach(el => sum *= +calculator(el))     
+      return sum
+      // return +calculator(arr[0]) * (+calculator(arr[1]))
+    } else if (str.includes('/')) {
+      const arr = str.split('/')
+      let sum = +arr[0] 
+      arr.forEach((el, i) => sum /= i ? +calculator(el): 1)     
+      return sum
+      // return +calculator(arr[0]) / (+calculator(arr[1]))
+    }
+    return +str
+  }
+  console.log(calculator('18 + 9 * 7 / 2 / 3.5 - 5 + 10 * 2 * 4'))
+  console.log(calculator('8 * 89/8 + 1'))
+  // console.log(calculator('88 / 8'))
+  // console.log(calculator('81 - 9'))
+
+}
