@@ -2140,3 +2140,317 @@ ladder.up().up().down().showStep().down().showStep().down()
   // console.log(calculator('81 - 9'))
 
 }
+
+
+{
+
+  // Функции - конструкторы технически являются обычными функциями.Но есть два соглашения:
+
+  // Имя функции - конструктора должно начинаться с большой буквы.
+  // Функция - конструктор должна выполняться только с помощью оператора "new".
+  
+  const User = (function (this:any, name:string) {
+    this.name = name
+    this.isAdmin = false
+    this.isStudent = true
+    this.sayHi = function () {
+      return "Меня зовут: " + this.name
+    }
+  }) as any
+  
+  const Student = (function (this:any, name:string, learning:boolean) {
+    this.name = name
+    this.isStudent = learning
+  }) as any
+
+  let user = new User("Jack")
+  user.isAdmin = true
+  for (let key in user) {
+    console.log(key)
+  }
+
+  let user1 = new User("Jack2")
+
+  const userArr = [
+    new Student("Jack", true),
+    new Student("Ann", false),
+    new Student("Jane", true),
+  ]
+
+  console.log(userArr)
+
+  console.log(user1)
+  console.log(user)
+  console.log(user1.sayHi())
+  console.log(user.sayHi())
+  console.log({ name: 'Jack2', isAdmin: false })
+  console.log(user.name)
+  console.log(user.isAdmin)
+
+// Когда функция вызывается как new User(...), происходит следующее:
+
+// Создаётся новый пустой объект, и он присваивается this.
+// Выполняется тело функции.Обычно оно модифицирует this, добавляя туда новые свойства.
+// Возвращается значение this.
+// Другими словами, new User(...) делает что - то вроде:
+
+//   function User(name) {
+//     this = {};  (неявно)
+
+//     добавляет свойства к this
+//     this.name = name;
+//     this.isAdmin = false;
+
+//     return this;  (неявно)
+//   }
+
+}
+
+{
+  // Классы
+
+  // В объектно - ориентированном программировании класс – это расширяемый шаблон кода для создания объектов, который устанавливает в них начальные значения(свойства) и реализацию поведения(методы).
+
+  // class MyClass {
+  //   методы класса
+  //   constructor() { ... }
+  //   method1() { ... }
+  //   method2() { ... }
+  //   method3() { ... }
+  // ...
+  // }
+
+  class User {
+    name = ''
+    #isAdmin = false
+    isStudent = true
+    constructor(name:string) {
+      this.name = name
+    }
+    sayHi() {
+      return "Меня зовут: " + this.name
+    }
+    get isAdmin() {
+      return this.#isAdmin
+    }
+  }
+
+  const user = new User('Jack')
+
+
+  console.log(user.isAdmin)
+
+  console.log(user)
+  for (let key in user) {
+    console.log(key)
+  }
+  // const newUser = new user.constructor('new')
+  // console.log(newUser)
+
+  console.log(user.sayHi())
+
+  const usrArr = [
+    new User('Jack'),
+    new User('Jack1'),
+    new User('Jack2'),
+  ]
+
+  console.log(usrArr)
+
+  // класс - это функция
+  console.log(typeof User)
+
+  // ...или, если точнее, это метод constructor
+  console.log(User === User.prototype.constructor)
+
+  // Методы находятся в User.prototype, например:
+  console.log(User.prototype.sayHi)
+
+  // в прототипе ровно 2 метода
+  console.log(Object.getOwnPropertyNames(User.prototype))
+
+}
+
+{
+
+  // Есть только два ограничения:
+  // Ссылки не могут идти по кругу.JavaScript выдаст ошибку, если мы попытаемся назначить __proto__ по кругу.
+  // Значение __proto__ может быть объектом или null.Другие типы игнорируются.
+
+  let animal = {
+    name: "animal",
+    eats: true,
+    // __proto__: null,
+    walk() {
+      return this.name + " walk"
+    },
+    sleep() {
+      this.isSleeping = true
+    },
+    wakeUp() {
+      this.isSleeping = false
+    }
+  } as any
+
+  let rabbit = {
+    isSleeping: false,
+    name: 'rabbit',
+    jumps: true,
+    __proto__: animal,
+    toString() {
+      return 'белый кролик'
+    }
+  } as any
+
+  rabbit.walk = function() {
+    return 'Rabbit! Bounce - bounce!'
+  }
+
+  console.log(rabbit.toString())
+
+  let longEar = {
+    earLength: 10,
+    __proto__: rabbit
+  }
+
+  // console.log(rabbit.isSleeping)
+  // rabbit.sleep()
+  // console.log(rabbit.isSleeping)
+  // rabbit.wakeUp()
+  // console.log(rabbit.isSleeping)
+  animal.sleep()
+  console.log(animal.isSleeping)
+  console.log(rabbit.isSleeping)
+
+  console.log(rabbit.jumps)
+  rabbit.eats = false
+  console.log(rabbit.eats)
+  console.log(animal.eats)
+  console.log(rabbit)
+
+  for (let key in rabbit) {
+    let isOwn = rabbit.hasOwnProperty(key)
+    console.log(`${isOwn ? 'Собственное ': 'Унаследованное '}`+key)
+  }
+  // Китайская копия (потеряли прототип)
+  console.log({...rabbit})
+
+  // Полная копия (качественная)
+  let clone = Object.create(Object.getPrototypeOf(rabbit), Object.getOwnPropertyDescriptors(rabbit));
+  console.log(clone)
+
+  console.log(Object.keys(rabbit))
+  console.log(animal.walk())
+  console.log(rabbit.walk())
+  
+  let obj = {}
+  console.log(obj)
+  console.log(longEar)
+
+// В JavaScript все объекты имеют скрытое свойство[[Prototype]], которое является либо другим объектом, либо null.
+// Мы можем использовать obj.__proto__ для доступа к нему(исторически обусловленный геттер / сеттер, есть другие способы, которые скоро будут рассмотрены).
+// Объект, на который ссылается[[Prototype]], называется «прототипом».
+// Если мы хотим прочитать свойство obj или вызвать метод, которого не существует у obj, тогда JavaScript попытается найти его в прототипе.
+// Операции записи / удаления работают непосредственно с объектом, они не используют прототип(если это обычное свойство, а не сеттер).
+// Если мы вызываем obj.method(), а метод при этом взят из прототипа, то this всё равно ссылается на obj.Таким образом, методы всегда работают с текущим объектом, даже если они наследуются.
+// Цикл for..in перебирает как свои, так и унаследованные свойства.Остальные методы получения ключей / значений работают только с собственными свойствами объекта.
+
+}
+
+{
+  let obj = {} as any
+
+  console.log(obj.toString())
+  console.log(obj.__proto__ === Object.prototype)
+  console.log(obj.__proto__.__proto__)
+  // obj.toString === obj.__proto__.toString === Object.prototype.toString
+  
+  console.log([1])
+
+  let arr = [1, 2, 3] as any
+
+  // наследует ли от Array.prototype?
+  console.log(arr.__proto__ === Array.prototype)
+
+  // затем наследует ли от Object.prototype?
+  console.log(arr.__proto__.__proto__ === Object.prototype)
+
+  // и null на вершине иерархии
+  console.log(arr.__proto__.__proto__.__proto__)
+
+  console.dir([1])
+
+  let obj1 = {
+    0: "Hello",
+    1: "world!",
+    length: 2,
+  }
+  console.log(obj1)
+  const objArr = Array.from(obj1)
+  console.log(objArr)
+
+// Все встроенные объекты следуют одному шаблону:
+// Методы хранятся в прототипах(Array.prototype, Object.prototype, Date.prototype и т.д.).
+// Сами объекты хранят только данные(элементы массивов, свойства объектов, даты).
+// Примитивы также хранят свои методы в прототипах объектов - обёрток: Number.prototype, String.prototype, Boolean.prototype.Только у значений undefined и null нет объектов - обёрток.
+// Встроенные прототипы могут быть изменены или дополнены новыми методами.Но не рекомендуется менять их.Единственная допустимая причина – это добавление нового метода из стандарта, который ещё не поддерживается движком JavaScript.
+
+  console.log({})
+  console.log(Object.create(null))
+
+}
+
+{
+
+  class Animal {
+    speed:number
+    name: string
+    constructor(name:string) {
+      console.log('0',this)
+      this.speed = 0;
+      this.name = name;
+      console.log('1',this)
+    }
+    run(speed:number) {
+      this.speed = speed;
+      return (`${this.name} бежит со скоростью ${this.speed}.`);
+    }
+    stop() {
+      this.speed = 0;
+      return  (`${this.name} стоит неподвижно.`);
+    }
+  }
+
+  let animal = new Animal("Мой питомец");
+
+  class Rabbit extends Animal {
+    age:number
+    constructor(name:string, age=0) {
+      super(name)
+      console.log('2', this)
+      this.age = age
+      console.log('3', this)
+    }
+    hide() {
+      super.stop()
+      return (`${this.name} прячется!`);
+    }
+  }
+
+  let rabbit = new Rabbit("Белый кролик");
+  // const rabbitFarm = [
+  //   new Rabbit("Белый кролик"),
+  //   new Rabbit("Белый1 кролик"),
+  //   new Rabbit("Белый2 кролик"),
+  //   new Rabbit("Белый3 кролик"),
+  // ]
+
+  // console.log(rabbitFarm)
+
+  console.log(rabbit)
+  console.log(rabbit.run(5))
+  console.log(rabbit.hide())
+  console.log(rabbit.speed)
+
+}
+
