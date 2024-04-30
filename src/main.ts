@@ -2454,3 +2454,126 @@ ladder.up().up().down().showStep().down().showStep().down()
 
 }
 
+{
+
+// Реализовать класс PrintMachine, которой состоит из:
+// ■ размера шрифта;
+// ■ цвета шрифта;
+// ■ семейства шрифта;
+// ■ метода print(), который принимает текст и печатает его соответствующим шрифтом.
+// Создать объект такого класса и продемонстрировать работу метода.
+
+  const pmDiv = document.getElementById('pm') as HTMLDivElement
+  class PrintMachine {
+    tag:string
+    fSize:string
+    color: string
+    fFamily: string
+    constructor(fSize: string, color: string, fFamily: string, tag = 'p') {
+      this.tag = tag
+      this.fSize = fSize
+      this.color = color
+      this.fFamily = fFamily
+    }
+    print(text:string) {
+      pmDiv.innerHTML += `<${this.tag} style="font-size:${this.fSize};font-family:${this.fFamily}; color: ${this.color}">${text}</${this.tag}>`
+    }
+  }
+
+  PrintMachine
+  // const redPM = new PrintMachine('50px', 'red', 'Arial')
+  // const blackPM = new PrintMachine('25px', 'black', 'Tahoma', 'h1')
+  // redPM.print('Alert')
+  // blackPM.print('(tommorow)')
+  // redPM.print('1 may on nose')
+  // blackPM.print('not work')
+}
+
+{
+  // Реализовать класс, описывающий html элемент.
+  // Класс HtmlElement должен содержать внутри себя:
+  // ■ название тега;
+  // ■ самозакрывающийся тег или нет;
+  // ■ текстовое содержимое;
+  // ■ массив атрибутов;
+  // ■ массив стилей;
+  // ■ массив вложенных таких же тегов;
+  // ■ метод для установки атрибута;
+  // ■ метод для установки стиля;
+  // ■ метод для добавления вложенного элемента в конец текущего элемента;
+  // ■ метод для добавления вложенного элемента в начало текущего элемента;
+  // ■ метод getHtml(), который возвращает html код в виде
+  //   строки, включая html код вложенных элементов.
+  // С помощью написанного класса реализовать следующий блок
+  // и добавить его на страницу с помощью document.write().
+
+  class HtmlElement {
+    tag: string
+    isSingle: boolean
+    text: string
+    atributes = [] as any[]
+    styles = [] as any[]
+    elements = [] as HtmlElement[]
+    constructor(tag: string, text='') {
+      const singleArr = ['area','base','br','col','embed','hr','img','input','keygen','link','meta','param','source','track','wbr']
+      this.tag = tag
+      this.text = text
+      this.isSingle = singleArr.includes(tag) ? true : false
+    }
+    setAtribute(name:string, value:string) {
+      this.atributes.push({name, value})
+    }
+    setStyle(name:string, value:string) {
+      this.styles.push({name, value})
+    }
+    prepend(el:HtmlElement) {
+      this.elements.unshift(el)
+    }
+    append(el:HtmlElement) {
+      this.elements.push(el)
+    }
+    getHtml():string {
+      const styles = this.styles.map(el=>el.name+':'+el.value).join(';')
+      const attrCopy = [...this.atributes]
+      if (this.styles.length) {
+        attrCopy.push({ name: 'style', value: styles })
+      }
+      const atributes = attrCopy.map(el=>el.name+'="'+el.value+'"').join(' ')
+      if (this.isSingle) {
+        if (this.text) {
+          attrCopy.push({ name: 'area-label', value: this.text })
+        }
+        return `<${this.tag} ${atributes}>`
+      } else {
+        return `<${this.tag} ${atributes}>${this.text}${this.elements.map(el=>el.getHtml()).join('\n')}</${this.tag}>`
+      }
+    }
+  }
+  
+  const wrapper = new HtmlElement('div')
+  wrapper.setAtribute('id', 'wrapper')
+  wrapper.setStyle('display', 'flex')
+  const div = new HtmlElement('div')
+  div.setStyle('width', '300px')
+  div.setStyle('margin', '10px')
+  const h3 = new HtmlElement('h3', 'Lorem')
+  const img = new HtmlElement('img')
+  img.setStyle('width', '100%')
+  img.setAtribute('src', '1.gif')
+  img.setAtribute('alt', 'Lorem')
+  const p = new HtmlElement('p', 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Nulla assumenda inventore voluptas natus obcaecati mollitia ad eos adipisci delectus quia odit, earum culpa sunt, molestiae doloribus in explicabo! Illo, harum!')
+  p.setStyle('text-align', 'justify')
+  const a = new HtmlElement('a', 'More...')
+  a.setAtribute('href', 'https://www.lipsum.com/')
+  a.setAtribute('target', '_blank')
+  p.append(a)
+  div.append(img)
+  div.append(p)
+  div.prepend(h3)
+  wrapper.append(div)
+  wrapper.append(div)
+  
+  const heDiv = document.getElementById('he') as HTMLDivElement
+  heDiv.innerHTML = wrapper.getHtml()
+
+}
