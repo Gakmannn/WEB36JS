@@ -2538,13 +2538,14 @@ ladder.up().up().down().showStep().down().showStep().down()
       if (this.styles.length) {
         attrCopy.push({ name: 'style', value: styles })
       }
-      const atributes = attrCopy.map(el=>el.name+'="'+el.value+'"').join(' ')
       if (this.isSingle) {
         if (this.text) {
           attrCopy.push({ name: 'area-label', value: this.text })
         }
+        const atributes = attrCopy.map(el=>el.name+'="'+el.value+'"').join(' ')
         return `<${this.tag} ${atributes}>`
       } else {
+        const atributes = attrCopy.map(el=>el.name+'="'+el.value+'"').join(' ')
         return `<${this.tag} ${atributes}>${this.text}${this.elements.map(el=>el.getHtml()).join('\n')}</${this.tag}>`
       }
     }
