@@ -2578,3 +2578,65 @@ ladder.up().up().down().showStep().down().showStep().down()
   heDiv.innerHTML = wrapper.getHtml()
 
 }
+
+{
+  let now = new Date()
+  console.log(now)
+  console.log(now.getTime())
+  console.log(new Date().toLocaleString())
+  
+
+  // '2012-01-26T13:51:50.417-07:00'
+  //  Формат строки должен быть следующим: YYYY - MM - DDTHH: mm: ss.sssZ, где:
+  //  YYYY - MM - DD – это дата: год - месяц - день.
+  //  Символ "T" используется в качестве разделителя.
+  //  HH: mm: ss.sss – время: часы, минуты, секунды и миллисекунды.
+  //  Необязательная часть 'Z' обозначает часовой пояс в формате + -hh: mm.Если указать просто букву Z, то получим UTC + 0.
+  let date = new Date("2024-04-28T00:00:00.000-22:00")
+  console.log(Date.parse("2024-04-28T00:00:00.000-22:00"))
+  console.log(date.toLocaleString())
+  console.log(date.getDay())
+  console.log(date.getUTCDay())
+  console.log(date.getTimezoneOffset())
+  
+  // new Date(year, month, date, hours, minutes, seconds, ms)
+  date = new Date(2017,0,5)
+  console.log(date.toLocaleString())
+  console.log(date.getHours())
+  console.log(date.getUTCHours())
+  
+  // getFullYear()
+  // Получить год(4 цифры)
+  // getMonth()
+  // Получить месяц, от 0 до 11.
+  // getDate()
+  // Получить день месяца, от 1 до 31, что несколько противоречит названию метода.
+  // getHours(), getMinutes(), getSeconds(), getMilliseconds()
+  // Получить, соответственно, часы, минуты, секунды или миллисекунды.
+  // getDay()
+  // Вернуть день недели от 0(воскресенье) до 6(суббота).Несмотря на то, что в ряде стран за первый день недели принят понедельник, в JavaScript начало недели приходится на воскресенье.
+
+  // setFullYear(year, [month], [date])
+  // setMonth(month, [date])
+  // setDate(date)
+  // setHours(hour, [min], [sec], [ms])
+  // setMinutes(min, [sec], [ms])
+  // setSeconds(sec, [ms])
+  // setMilliseconds(ms)
+  // setTime(milliseconds)
+
+  console.log(date.toLocaleString())
+  date.setHours(36)
+  date.setSeconds(155)
+  console.log(date.toLocaleString())
+
+  console.log((now.getTime() - date.getTime())/(1000*60*60*24))
+  
+// Дата и время в JavaScript представлены объектом Date.Нельзя создать «только дату» или «только время»: объекты Date всегда содержат и то, и другое.
+// Счёт месяцев начинается с нуля(да, январь – это нулевой месяц).
+// Дни недели в getDay() также отсчитываются с нуля, что соответствует воскресенью.
+// Объект Date самостоятельно корректируется при введении значений, выходящих за рамки допустимых.Это полезно для сложения / вычитания дней / месяцев / недель.
+// Даты можно вычитать, и разность возвращается в миллисекундах.Так происходит, потому что при преобразовании в число объект Date становится таймстампом.
+// Используйте Date.now() для быстрого получения текущего времени в формате таймстампа.
+
+}
