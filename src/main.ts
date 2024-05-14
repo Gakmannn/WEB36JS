@@ -1,5 +1,7 @@
 import './style.scss'
-console.log('Hello world')
+
+setTimeout(() => console.log('*****Hello world*****'),0)
+
 document.write('<div id="main" style="background: lightblue;">dfgdfgdf</div>')
 
 a = 25
@@ -2640,3 +2642,129 @@ ladder.up().up().down().showStep().down().showStep().down()
 // Используйте Date.now() для быстрого получения текущего времени в формате таймстампа.
 
 }
+
+{
+  // function sayHi0() {
+  //   console.log('Hello')
+  // }
+  // setTimeout(sayHi0(), 1000)
+
+  function sayHi(phrase:string, who:string) {
+    console.log(phrase + ', ' + who)
+  }
+  const timer = setTimeout(() => sayHi("Привет", "Джон"), 1000)
+  clearTimeout(timer)
+  
+  const timer1 = setInterval(() => console.log('TICK'), 2000)
+  setTimeout(()=>{clearInterval(timer1);console.log('boom!!!')}, 5000)
+
+// Методы setInterval(func, delay, ...args) и setTimeout(func, delay, ...args) позволяют выполнять func регулярно или только один раз после задержки delay, заданной в мс.
+// Для отмены выполнения необходимо вызвать clearInterval / clearTimeout со значением, которое возвращают методы setInterval / setTimeout.
+// Вложенный вызов setTimeout является более гибкой альтернативой setInterval.Также он позволяет более точно задать интервал между выполнениями.
+// Планирование с нулевой задержкой setTimeout(func, 0) или, что то же самое, setTimeout(func) используется для вызовов, которые должны быть исполнены как можно скорее, после завершения исполнения текущего кода.
+// Браузер ограничивает 4 - мя мс минимальную задержку между пятью и более вложенными вызовами setTimeout, а также для setInterval, начиная с 5 - го вызова.
+// Обратим внимание, что все методы планирования не гарантируют точную задержку.
+
+// Например, таймер в браузере может замедляться по многим причинам:
+
+// Перегружен процессор.
+// Вкладка браузера в фоновом режиме.
+// Работа ноутбука от аккумулятора.
+// Всё это может увеличивать минимальный интервал срабатывания таймера(и минимальную задержку) до 300 или даже 1000 мс в зависимости от браузера и настроек производительности ОС.
+
+  function printNumbers(from:number, to:number) {
+    let current = from
+    let timerId = setInterval(() => {
+      console.log(current)
+      if (current == to) {
+        clearInterval(timerId)
+      }
+      current++
+    }, 1000)
+  }
+
+  const dateDiv = document.getElementById('date') as HTMLDivElement
+  const dateStopButton = document.getElementById('dateStop') as HTMLButtonElement
+  const dateStartButton = document.getElementById('dateStart') as HTMLButtonElement
+  
+  dateDiv.innerHTML = new Date().toLocaleString()
+  let timerId = setInterval(()=>{
+    dateDiv.innerHTML = new Date().toLocaleString()
+  },1000)
+
+  dateStopButton.addEventListener('click', ()=>{
+    clearInterval(timerId)
+  })
+  dateStartButton.addEventListener('click', ()=>{
+    clearInterval(timerId)
+    dateDiv.innerHTML = new Date().toLocaleString()
+    timerId = setInterval(() => {
+      dateDiv.innerHTML = new Date().toLocaleString()
+    }, 1000)
+  })
+
+}
+
+const addButton = document.getElementById('add') as HTMLButtonElement
+const reduceButton = document.getElementById('reduce') as HTMLButtonElement
+const numSpan = document.getElementById('num') as HTMLSpanElement
+
+addButton.addEventListener('click',()=>{
+  numSpan.innerHTML = (+numSpan.innerHTML +1).toString()
+})
+reduceButton.addEventListener('click',()=>{
+  numSpan.innerHTML = (+numSpan.innerHTML -1).toString()
+})
+
+function makeCounter() {
+  let count = 0;
+
+  return function () {
+    return count++; // есть доступ к внешней переменной "count"
+  };
+}
+
+let counter0 = makeCounter()
+console.log(counter0())
+console.log(counter0())
+console.log(counter0())
+console.log(counter0())
+let counter1 = makeCounter()
+console.log(counter1())
+console.log(counter1())
+console.log(counter1())
+console.log(counter1())
+console.log(counter1())
+console.log(counter1())
+console.log(counter1())
+console.log(makeCounter()())
+
+let phrase = 'Hello'
+
+{
+  function sayHello(name:string) {
+    console.log(phrase + ' ' + name)
+  }
+
+  sayHello('John')
+  phrase = 'Goodbye'
+  sayHello('John')
+}
+
+{
+  function sum(a:number) {
+    return function (b: number) {
+      return function (c: number) {
+        return a + b + c
+      }
+    }
+  }
+
+  const addtoOne = sum(1)
+  console.log(addtoOne(2)(4))
+  console.log(addtoOne(10)(6))
+  console.log(sum(5)(-1)(80))
+  console.log(sum)
+
+}
+
