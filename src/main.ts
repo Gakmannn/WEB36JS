@@ -2816,14 +2816,16 @@ class ExtendedArray extends Array {
       
   // }
   // @ts-ignore
-  findIndex(fn:any) {
+  findIndex(predicate: (value: any, index: number, obj: any[]) => unknown, thisArg?: any): number {
     for (let i=0; i<this.length; i++) {
-      if (fn(this[i], i, this)) return i
+      if (predicate(this[i], i, this)) return i
+      // if (this[i].name=='2') return i
     }
+    return -1
   }
 }
 
 // @ts-ignore
 const myArr = new ExtendedArray({name:'sdfsd1'},{name:'sdfsd2'},{name:'sdfsd3'},{name:'sdfsd4'},{name:'sdfsd'},{name:'sdfsd'},{name:'sdfsd'},{name:'sdfsd'},)
-console.log(myArr.findIndex((el: any) => el.name =='sdfsd1'))
+console.log(myArr.findIndex((el: any) => el.name =='2'))
 // figureArr.findIndex(el=>el==)
