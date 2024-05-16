@@ -2482,8 +2482,20 @@ ladder.up().up().down().showStep().down().showStep().down()
     }
   }
 
+  class ExtendedPrintMachine extends PrintMachine {
+    fontStyle: string
+    constructor(fSize: string, color: string, fFamily: string, fontStyle:string, tag = 'p' ) {
+      super(fSize, color, fFamily, tag)
+      this.fontStyle = fontStyle
+    }
+    print(text: string) {
+      pmDiv.innerHTML += `<${this.tag} style="font-style:${this.fontStyle};font-size:${this.fSize};font-family:${this.fFamily}; color: ${this.color}">${text}</${this.tag}>`
+    }
+  }
+
   PrintMachine
-  // const redPM = new PrintMachine('50px', 'red', 'Arial')
+  const redPM = new ExtendedPrintMachine('50px', 'red', 'Arial', 'italic')
+  redPM.print('asdas asdasd sa')
   // const blackPM = new PrintMachine('25px', 'black', 'Tahoma', 'h1')
   // redPM.print('Alert')
   // blackPM.print('(tommorow)')
@@ -2768,3 +2780,50 @@ let phrase = 'Hello'
 
 }
 
+localStorage.mykey = JSON.stringify({somefing:'dfs'})
+console.log(JSON.parse(localStorage.mykey).somefing)
+
+class ExtendedDate extends Date {
+  print() {
+    return this.toLocaleString()
+  }
+  // @ts-ignore
+  toLocaleString() {
+    return '*** ' + super.toLocaleString() + ' ***'
+  }
+}
+
+console.log(new ExtendedDate().print())
+
+
+class Figure {
+
+}
+
+class Square extends Figure {
+
+}
+
+class Rectangle extends Figure {
+
+}
+
+const figureArr:Figure[] = [new Square(), new Rectangle()]
+
+
+class ExtendedArray extends Array {
+  // findIndex(predicate: (value: any, index: number, obj: any[]) => unknown, thisArg?: any): number {
+      
+  // }
+  // @ts-ignore
+  findIndex(fn:any) {
+    for (let i=0; i<this.length; i++) {
+      if (fn(this[i], i, this)) return i
+    }
+  }
+}
+
+// @ts-ignore
+const myArr = new ExtendedArray({name:'sdfsd1'},{name:'sdfsd2'},{name:'sdfsd3'},{name:'sdfsd4'},{name:'sdfsd'},{name:'sdfsd'},{name:'sdfsd'},{name:'sdfsd'},)
+console.log(myArr.findIndex((el: any) => el.name =='sdfsd1'))
+// figureArr.findIndex(el=>el==)
