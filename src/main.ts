@@ -1882,14 +1882,17 @@ function sayHi() {
   // @ts-ignore
   return (this?.name)
 }
-// Вызов без объекта: this == undefined
-console.log(sayHi())
-
 const user1 = {
   name: '1',
-  sayHi: sayHi,
+  // sayHi: sayHi,
 }
-console.log(user1.sayHi())
+
+// Вызов без объекта: this == undefined
+console.log(sayHi())
+// Передаём this при помощи метода call
+console.log(sayHi.call(user1))
+
+// console.log(user1.sayHi())
 
 const user2 = {
   name: 2,
@@ -2807,6 +2810,10 @@ class Square extends Figure {
 class Rectangle extends Figure {
 
 }
+console.log(new Square() instanceof Square)
+console.log(new Square() instanceof Figure)
+console.log(new Square() instanceof Object)
+
 
 const figureArr:Figure[] = [new Square(), new Rectangle()]
 
@@ -2829,3 +2836,139 @@ class ExtendedArray extends Array {
 const myArr = new ExtendedArray({name:'sdfsd1'},{name:'sdfsd2'},{name:'sdfsd3'},{name:'sdfsd4'},{name:'sdfsd'},{name:'sdfsd'},{name:'sdfsd'},{name:'sdfsd'},)
 console.log(myArr.findIndex((el: any) => el.name =='2'))
 // figureArr.findIndex(el=>el==)
+
+class CoffeeMachine {
+  #power:number
+  #waterAmount = 0
+  #waterLimit = 1000
+  constructor(power: number) {
+    this.#power = power
+  }
+
+  set waterAmount(value) {
+    if (value < 0) throw new Error("Отрицательное количество воды")
+    this.#waterAmount = value
+  }
+  get waterAmount() {
+    return this.#waterAmount
+  }
+  #checkWater(value:number) {
+    if (value < 0) throw new Error("Отрицательный уровень воды");
+    if (value < 50) throw new Error("Слишком мало воды");
+    if (value > this.#waterLimit) throw new Error("Слишком много воды");
+  }
+
+  makeCoffe() {
+    this.#checkWater(this.#waterAmount)
+    this.#waterAmount-=50
+    return '☕'
+  }
+}
+
+// CoffeeMachine.label = ()=>'apple'
+// console.log(CoffeeMachine.label())
+
+// создаём новую кофеварку
+let coffeeMachine = new CoffeeMachine(100)
+coffeeMachine.waterAmount = 1000
+console.log(coffeeMachine.waterAmount)
+console.log(coffeeMachine.makeCoffe())
+console.log(coffeeMachine.makeCoffe())
+console.log(coffeeMachine.makeCoffe())
+console.log(coffeeMachine.makeCoffe())
+console.log(coffeeMachine.waterAmount)
+
+console.log(coffeeMachine instanceof Square)
+console.log(coffeeMachine instanceof Figure)
+console.log(coffeeMachine instanceof Object)
+
+class MegaCoffeeMachine extends CoffeeMachine {
+  method() {
+    console.log(this.waterAmount); // Error: can only access from CoffeeMachine
+  }
+}
+
+const newCM = new MegaCoffeeMachine(200)
+console.log(newCM.waterAmount)
+newCM.waterAmount = 100
+console.log(newCM.waterAmount)
+
+
+// Всегда удобно, когда детали реализации скрыты, и доступен простой, хорошо документированный внешний интерфейс.
+// Для сокрытия внутреннего интерфейса мы используем защищённые или приватные свойства:
+
+// ?Защищённые поля имеют префикс _.Это хорошо известное соглашение, не поддерживаемое на уровне языка.Программисты должны обращаться к полю, начинающемуся с _, только из его класса и классов, унаследованных от него.
+// ?Приватные поля имеют префикс #.JavaScript гарантирует, что мы можем получить доступ к таким полям только внутри класса.
+
+class MyObject {
+  static #_id = 0
+  #id:number
+  constructor() {
+    this.#id = MyObject.#_id++
+  }
+  static getCount() {
+    return MyObject.#_id
+  }
+  getId() {
+    return this.#id
+  }
+}
+
+const myObjects = [
+  new MyObject(),
+  new MyObject(),
+  new MyObject(),
+  new MyObject(),
+  new MyObject(),
+]
+const myObjects1 = [
+  new MyObject(),
+  new MyObject(),
+  new MyObject(),
+  new MyObject(),
+  new MyObject(),
+]
+
+console.log(myObjects[3].getId())
+console.log(MyObject.getCount())
+
+// !!! Задачи с декоратарами
+// https://learn.javascript.ru/call-apply-decorators#dekorator-shpion
+
+const obj0 = {1:2}
+console.log({_proto_:{},...obj0})
+
+
+let sayMixin = {
+  say(phrase:string) {
+    console.log(phrase);
+  }
+};
+
+let sayHiMixin = {
+  __proto__: sayMixin, // (или мы можем использовать Object.setPrototypeOf для задания прототипа)
+
+  sayHi() {
+    // вызываем метод родителя
+    // @ts-ignore
+    super.say(`Привет, ${this.name}`); // (*)
+  },
+  sayBye() {
+    // @ts-ignore
+    super.say(`Пока, ${this.name}`); // (*)
+  }
+};
+
+class User {
+  name:string
+  constructor(name:string) {
+    this.name = name;
+  }
+}
+
+// копируем методы
+Object.assign(User.prototype, sayHiMixin);
+
+// теперь User может сказать Привет
+// @ts-ignore
+console.log(new User("Вася"))
