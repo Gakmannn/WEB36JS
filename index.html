@@ -48,6 +48,7 @@
   </head>
   <body>
 
+    <!-- Comment -->
     <img src="vite.svg" alt="">
     New project
     
@@ -76,7 +77,7 @@
         <input type="text" id="productName" placeholder="название продукта">
         <br>
         <input type="text" id="productCount" placeholder="количество">
-        <br>
+        <br id="br">
         <button id="addProduct">Добавить</button>
         <br>
         <button id="setBuyed">Отметить купленным</button>
@@ -124,6 +125,8 @@
     <script type="module" src="/src/main.ts"></script>
     <script>
 
+      window.a = 10
+
       console.log(this)
 
       function itsPublic() {
@@ -142,6 +145,11 @@
       const str = 'dfas'
       str.name = 2
       console.log(str.name)
+
+      // let elem = document.querySelector('#br')
+      // while (elem = elem.parentElement) { // идти наверх до <html>
+      //   console.log(elem.toString())
+      // }
 
     </script>
 

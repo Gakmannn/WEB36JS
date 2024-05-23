@@ -2972,3 +2972,4 @@ Object.assign(User.prototype, sayHiMixin);
 // теперь User может сказать Привет
 // @ts-ignore
 console.log(new User("Вася"))
+
