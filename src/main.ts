@@ -2973,3 +2973,41 @@ Object.assign(User.prototype, sayHiMixin);
 // @ts-ignore
 console.log(new User("Вася"))
 
+{
+  let data = {
+    "Рыбы": {
+      "форель": {},
+      "лосось": {}
+    },
+    "Деревья": {
+      "Огромные": {
+        "секвойя": {},
+        "дуб": {}
+      },
+      "Цветковые": {
+        "яблоня": {},
+        "магнолия": {}
+      }
+    }
+  } as Record<string, any>
+
+  let container = document.querySelector('#container ul') as HTMLUListElement
+  
+  function createTree(container: HTMLUListElement, data: Record<string, any>) {
+    for (let key in data) {
+      if (Object.keys(data[key]).length) {
+        const li = document.createElement('li')
+        li.innerHTML = `${key}<ul></ul>`
+        container.append(li)
+        const ul = li.querySelector('ul') as HTMLUListElement
+        createTree(ul, data[key]) 
+      } else {
+        container.insertAdjacentHTML('beforeend', `<li>${key}</li>`)
+      }
+    }
+  }
+
+  createTree(container, data)
+
+}
+
