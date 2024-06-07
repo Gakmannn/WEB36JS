@@ -3008,6 +3008,83 @@ console.log(new User("Вася"))
   }
 
   createTree(container, data)
+}
+
+type options = {
+  top?:number,
+  right?: number,
+  html?: string,
+  class?: string
+}
+
+function showNotification(options: options) {
+  if (!options.top) options.top = 0
+  if (!options.right) options.right = 0
+  if (!options.html) options.html = ''
+  if (!options.class) options.class = ''
+  
+  const div = document.createElement('div')
 
 }
 
+showNotification({})
+
+{
+  const trs = document.querySelectorAll('#table tbody tr') as NodeListOf<HTMLTableRowElement>
+  const trArr = Array.from(trs)
+  trArr.sort((a, b) => {
+    const aString = a.firstElementChild?.textContent as string
+    const bString = b.firstElementChild?.textContent as string
+    return aString.localeCompare(bString)
+  })
+  const tbody = document.querySelector('#table tbody') as HTMLTableSectionElement
+  for (let el of trArr) {
+    tbody.append(el)
+  }
+}
+
+{
+  const tbody = document.querySelector('#table tbody') as HTMLTableSectionElement
+  const thead = document.querySelector('#table thead') as HTMLTableSectionElement
+  const tableData = [
+    {name: 'Ann', lastName: '1dfsd', age:20},
+    {name: '2Ann', lastName: '2dfsd', age:18},
+    {name: 'zAnn', lastName: '3dfsd', age:21},
+    {name: 'WAnn', lastName: 'd4fsd', age:23},
+  ]
+
+  function renderTable(tableData: any[], where: HTMLTableSectionElement ) {
+    where.innerHTML = ''
+    for (let el of tableData) {
+      where.innerHTML += `<tr><td>${el.name}</td><td>${el.lastName}</td><td>${el.age}</td></tr>`
+    }
+  }
+
+  renderTable(tableData, tbody)
+
+  function sortTable(tableData: any[], where: HTMLTableSectionElement, field:string, order: boolean) {
+    tableData.sort((a,b)=>{
+      if (['name', 'lastName'].includes(field)) {
+        return a[field].localeCompare(b[field])
+      } else {
+        return a[field]-b[field]
+      }
+    })
+    if (!order) {
+      tableData.reverse()
+    }
+    renderTable(tableData, where)
+  }
+
+  thead.addEventListener('click', (e)=>{
+    const target = e.target as HTMLElement
+    const field = target.dataset.field as string
+    if (target.dataset.sort == 'true') {
+      sortTable(tableData, tbody, field, true)
+      target.dataset.sort = 'false'
+    } else {
+      sortTable(tableData, tbody, field, false)
+      target.dataset.sort = 'true'
+    }
+  })
+}
