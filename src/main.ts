@@ -3088,3 +3088,67 @@ showNotification({})
     }
   })
 }
+
+const scrollButton = document.querySelector('#scroll') as HTMLButtonElement
+
+scrollButton.addEventListener('click', ()=>{
+  if (bottomButton.parentElement) bottomButton.parentElement.scrollIntoView({
+    behavior: "smooth",
+    block: "start",
+    inline: "nearest"
+  })
+})
+
+// Размеры:
+
+// Ширина / высота видимой части документа(ширина / высота области содержимого): document.documentElement.clientWidth / Height
+
+// Ширина / высота всего документа со всей прокручиваемой областью страницы:
+// let scrollHeight = Math.max(
+//   document.body.scrollHeight, document.documentElement.scrollHeight,
+//   document.body.offsetHeight, document.documentElement.offsetHeight,
+//   document.body.clientHeight, document.documentElement.clientHeight
+// );
+
+// Прокрутка:
+// Прокрутку окна можно получить так: window.pageYOffset / pageXOffset.
+
+// Изменить текущую прокрутку:
+// window.scrollTo(pageX, pageY) – абсолютные координаты,
+// window.scrollBy(x, y) – прокрутка относительно текущего места,
+// elem.scrollIntoView(top) – прокрутить страницу так, чтобы сделать elem видимым(выровнять относительно верхней / нижней части окна).
+
+// Любая точка на странице имеет координаты:
+
+// Относительно окна браузера – elem.getBoundingClientRect().
+// Относительно документа – elem.getBoundingClientRect() плюс текущая прокрутка страницы.
+// Координаты в контексте окна подходят для использования с position: fixed, а координаты относительно документа – для использования с position: absolute.
+
+// Каждая из систем координат имеет свои преимущества и недостатки.Иногда будет лучше применить одну, а иногда – другую, как это и происходит с позиционированием в CSS, где мы выбираем между absolute и fixed.
+
+function fName(position: 'bottom'|'top') {
+
+}
+
+const fieldDataElement = document.querySelector('#fieldData') as HTMLDivElement
+const fieldElement = document.querySelector('#field') as HTMLDivElement
+const fieldStyles = getComputedStyle(fieldElement)
+const borderRight = parseFloat(fieldStyles.borderRightWidth)
+const borderBottom = parseFloat(fieldStyles.borderBottomWidth)
+const borderTop = parseFloat(fieldStyles.borderTopWidth)
+const borderLeft = parseFloat(fieldStyles.borderLeftWidth)
+document.addEventListener('scroll', ()=>{
+  const rect = fieldElement.getBoundingClientRect()
+  fieldDataElement.innerHTML = `<p>1. 
+  client: (${Math.round(rect.left)}, ${Math.round(rect.top)}), 
+  page: (${Math.round(rect.left + window.scrollX)}, ${Math.round(rect.top + window.scrollY)})</p>`
+  fieldDataElement.innerHTML += `<p>2. 
+  client: (${Math.round(rect.right)}, ${Math.round(rect.bottom)}),
+  page:(${Math.round(rect.right + window.scrollX)}, ${Math.round(rect.bottom + window.scrollY)})</p>`
+  fieldDataElement.innerHTML += `<p>3. 
+  client: (${Math.round(rect.left + borderLeft)}, ${Math.round(rect.top + borderTop)}), 
+  page: (${Math.round(rect.left + borderLeft + window.scrollX)}, ${Math.round(rect.top + borderTop + window.scrollY)})</p>`
+  fieldDataElement.innerHTML += `<p>4. 
+  client: (${Math.round(rect.right - borderRight)}, ${Math.round(rect.bottom - borderBottom)}), 
+  page: (${Math.round(rect.right - borderRight + window.scrollX)}, ${Math.round(rect.bottom - borderBottom + window.scrollY)})</p>`
+})
