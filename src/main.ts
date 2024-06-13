@@ -3152,3 +3152,10 @@ document.addEventListener('scroll', ()=>{
   client: (${Math.round(rect.right - borderRight)}, ${Math.round(rect.bottom - borderBottom)}), 
   page: (${Math.round(rect.right - borderRight + window.scrollX)}, ${Math.round(rect.bottom - borderBottom + window.scrollY)})</p>`
 })
+
+document.addEventListener('click', (e)=>{
+  console.log(e)
+})
+document.addEventListener('keydown', (e)=>{
+  console.log(e)
+})
