@@ -816,69 +816,127 @@ function initRect(rect: Rectangle, rectEl: HTMLDivElement) {
 }
 initRect(rectangle, rectElement)
 
-const topLeftButton = document.getElementById('topLeft') as HTMLDivElement
-const topButton = document.getElementById('top') as HTMLDivElement
-const topRightButton = document.getElementById('topRight') as HTMLDivElement
-const leftButton = document.getElementById('left') as HTMLDivElement
-const rightButton = document.getElementById('right') as HTMLDivElement
-const bottomLeftButton = document.getElementById('bottomLeft') as HTMLDivElement
-const bottomButton = document.getElementById('bottom') as HTMLDivElement
-const bottomRightButton = document.getElementById('bottomRight') as HTMLDivElement
+const numdapDiv = document.querySelector('.numpad') as HTMLDivElement
 
-const addHeightButton = document.getElementById('addHeight') as HTMLDivElement
-const addWidthButton = document.getElementById('addWidth') as HTMLDivElement
-const reduceHeightButton = document.getElementById('reduceHeight') as HTMLDivElement
-const reduceWidthButton = document.getElementById('reduceWidth') as HTMLDivElement
+// const topLeftButton = document.getElementById('topLeft') as HTMLDivElement
+// const topButton = document.getElementById('top') as HTMLDivElement
+// const topRightButton = document.getElementById('topRight') as HTMLDivElement
+// const leftButton = document.getElementById('left') as HTMLDivElement
+// const rightButton = document.getElementById('right') as HTMLDivElement
+// const bottomLeftButton = document.getElementById('bottomLeft') as HTMLDivElement
+// const bottomButton = document.getElementById('bottom') as HTMLDivElement
+// const bottomRightButton = document.getElementById('bottomRight') as HTMLDivElement
 
-addHeightButton.addEventListener('click', ()=>{
-  changeHeight(rectangle, 1)
-  initRect(rectangle, rectElement)
-})
-reduceHeightButton.addEventListener('click', ()=>{
-  changeHeight(rectangle, -1)
-  initRect(rectangle, rectElement)
-})
-addWidthButton.addEventListener('click', ()=>{
-  changeWidth(rectangle, 1)
-  initRect(rectangle, rectElement)
-})
-reduceWidthButton.addEventListener('click', ()=>{
-  changeWidth(rectangle, -1)
-  initRect(rectangle, rectElement)
+// const addHeightButton = document.getElementById('addHeight') as HTMLDivElement
+// const addWidthButton = document.getElementById('addWidth') as HTMLDivElement
+// const reduceHeightButton = document.getElementById('reduceHeight') as HTMLDivElement
+// const reduceWidthButton = document.getElementById('reduceWidth') as HTMLDivElement
+
+numdapDiv.addEventListener('click', (e)=>{
+  const eTarget = e.target as HTMLElement
+  const target = eTarget.closest('.button')
+  if (!target?.id) return
+  switch (target.id) {
+    case 'topLeft':
+      moveXY(rectangle, -10, -10)
+      initRect(rectangle, rectElement)
+      return
+    case 'top':
+      moveY(rectangle, -10)
+      initRect(rectangle, rectElement)
+      return
+    case 'topRight':
+      moveXY(rectangle, 10, -10)
+      initRect(rectangle, rectElement)
+      return
+    case 'left':
+      moveX(rectangle, -10)
+      initRect(rectangle, rectElement)
+      return
+    case 'right':
+      moveX(rectangle, 10)
+      initRect(rectangle, rectElement)
+      return
+    case 'bottomLeft':
+      moveXY(rectangle, -10, 10)
+      initRect(rectangle, rectElement)
+      return
+    case 'bottom':
+      moveY(rectangle, 10)
+      initRect(rectangle, rectElement)
+      return
+    case 'bottomRight':
+      moveXY(rectangle, 10, 10)
+      initRect(rectangle, rectElement)
+      return
+    case 'addHeight':
+      changeHeight(rectangle, 1)
+      initRect(rectangle, rectElement)
+      return
+    case 'addWidth':
+      changeWidth(rectangle, 1)
+      initRect(rectangle, rectElement)
+      return
+    case 'reduceHeight':
+      changeHeight(rectangle, -1)
+      initRect(rectangle, rectElement)
+      return
+    case 'reduceWidth':
+      changeWidth(rectangle, -1)
+      initRect(rectangle, rectElement)
+      return
+  }
 })
 
-topLeftButton.addEventListener('click', ()=>{
-  moveXY(rectangle, -10, -10)
-  initRect(rectangle, rectElement)
-})
-topButton.addEventListener('click', ()=>{
-  moveY(rectangle, -10)
-  initRect(rectangle, rectElement)
-})
-topRightButton.addEventListener('click', ()=>{
-  moveXY(rectangle, 10, -10)
-  initRect(rectangle, rectElement)
-})
-leftButton.addEventListener('click', ()=>{
-  moveX(rectangle, -10)
-  initRect(rectangle, rectElement)
-})
-rightButton.addEventListener('click', ()=>{
-  moveX(rectangle, 10)
-  initRect(rectangle, rectElement)
-})
-bottomLeftButton.addEventListener('click', () => {
-  moveXY(rectangle, -10, 10)
-  initRect(rectangle, rectElement)
-})
-bottomButton.addEventListener('click', () => {
-  moveY(rectangle, 10)
-  initRect(rectangle, rectElement)
-})
-bottomRightButton.addEventListener('click', () => {
-  moveXY(rectangle, 10, 10)
-  initRect(rectangle, rectElement)
-})
+// addHeightButton.addEventListener('click', ()=>{
+//   changeHeight(rectangle, 1)
+//   initRect(rectangle, rectElement)
+// })
+// reduceHeightButton.addEventListener('click', ()=>{
+//   changeHeight(rectangle, -1)
+//   initRect(rectangle, rectElement)
+// })
+// addWidthButton.addEventListener('click', ()=>{
+//   changeWidth(rectangle, 1)
+//   initRect(rectangle, rectElement)
+// })
+// reduceWidthButton.addEventListener('click', ()=>{
+//   changeWidth(rectangle, -1)
+//   initRect(rectangle, rectElement)
+// })
+
+// topLeftButton.addEventListener('click', ()=>{
+//   moveXY(rectangle, -10, -10)
+//   initRect(rectangle, rectElement)
+// })
+// topButton.addEventListener('click', ()=>{
+//   moveY(rectangle, -10)
+//   initRect(rectangle, rectElement)
+// })
+// topRightButton.addEventListener('click', ()=>{
+//   moveXY(rectangle, 10, -10)
+//   initRect(rectangle, rectElement)
+// })
+// leftButton.addEventListener('click', ()=>{
+//   moveX(rectangle, -10)
+//   initRect(rectangle, rectElement)
+// })
+// rightButton.addEventListener('click', ()=>{
+//   moveX(rectangle, 10)
+//   initRect(rectangle, rectElement)
+// })
+// bottomLeftButton.addEventListener('click', () => {
+//   moveXY(rectangle, -10, 10)
+//   initRect(rectangle, rectElement)
+// })
+// bottomButton.addEventListener('click', () => {
+//   moveY(rectangle, 10)
+//   initRect(rectangle, rectElement)
+// })
+// bottomRightButton.addEventListener('click', () => {
+//   moveXY(rectangle, 10, 10)
+//   initRect(rectangle, rectElement)
+// })
 
 {
 
@@ -3091,13 +3149,13 @@ showNotification({})
 
 const scrollButton = document.querySelector('#scroll') as HTMLButtonElement
 
-scrollButton.addEventListener('click', ()=>{
-  if (bottomButton.parentElement) bottomButton.parentElement.scrollIntoView({
-    behavior: "smooth",
-    block: "start",
-    inline: "nearest"
-  })
-})
+// scrollButton.addEventListener('click', ()=>{
+//   if (bottomButton.parentElement) bottomButton.parentElement.scrollIntoView({
+//     behavior: "smooth",
+//     block: "start",
+//     inline: "nearest"
+//   })
+// })
 
 // Размеры:
 
