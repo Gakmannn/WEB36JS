@@ -3188,7 +3188,7 @@ function fName(position: 'bottom'|'top') {
 
 }
 
-const fieldDataElement = document.querySelector('#fieldData') as HTMLDivElement
+const fieldDataElement = document.querySelector('#fieldData')
 const fieldElement = document.querySelector('#field') as HTMLDivElement
 const fieldStyles = getComputedStyle(fieldElement)
 const borderRight = parseFloat(fieldStyles.borderRightWidth)
@@ -3197,23 +3197,32 @@ const borderTop = parseFloat(fieldStyles.borderTopWidth)
 const borderLeft = parseFloat(fieldStyles.borderLeftWidth)
 document.addEventListener('scroll', ()=>{
   const rect = fieldElement.getBoundingClientRect()
-  fieldDataElement.innerHTML = `<p>1. 
+  fieldDataElement!.innerHTML = `<p>1. 
   client: (${Math.round(rect.left)}, ${Math.round(rect.top)}), 
   page: (${Math.round(rect.left + window.scrollX)}, ${Math.round(rect.top + window.scrollY)})</p>`
-  fieldDataElement.innerHTML += `<p>2. 
+  fieldDataElement!.innerHTML += `<p>2. 
   client: (${Math.round(rect.right)}, ${Math.round(rect.bottom)}),
   page:(${Math.round(rect.right + window.scrollX)}, ${Math.round(rect.bottom + window.scrollY)})</p>`
-  fieldDataElement.innerHTML += `<p>3. 
+  fieldDataElement!.innerHTML += `<p>3. 
   client: (${Math.round(rect.left + borderLeft)}, ${Math.round(rect.top + borderTop)}), 
   page: (${Math.round(rect.left + borderLeft + window.scrollX)}, ${Math.round(rect.top + borderTop + window.scrollY)})</p>`
-  fieldDataElement.innerHTML += `<p>4. 
+  fieldDataElement!.innerHTML += `<p>4. 
   client: (${Math.round(rect.right - borderRight)}, ${Math.round(rect.bottom - borderBottom)}), 
   page: (${Math.round(rect.right - borderRight + window.scrollX)}, ${Math.round(rect.bottom - borderBottom + window.scrollY)})</p>`
 })
 
-document.addEventListener('click', (e)=>{
-  console.log(e)
+// document.addEventListener('click', (e)=>{
+//   console.log(e)
+// })
+
+// let event = new MouseEvent("click", {bubbles:true})
+// setTimeout(()=>{
+//   fieldElement.dispatchEvent(event)
+// },1000)
+
+document.addEventListener('userInput', (e)=>{
+  // @ts-ignore
+  console.log(e.detail)
 })
-document.addEventListener('keydown', (e)=>{
-  console.log(e)
-})
+
+
