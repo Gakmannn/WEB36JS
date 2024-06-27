@@ -3225,4 +3225,79 @@ document.addEventListener('userInput', (e)=>{
   console.log(e.detail)
 })
 
+document.addEventListener('dragstart', (e)=>{
+  e.preventDefault()
+})
 
+document.addEventListener('mousedown', (e)=>{
+  if (e.button!=0) return
+  if (!e.ctrlKey) return
+  const mTarget = e.target as HTMLElement
+  const maybeTarget = mTarget.closest('[data-draggable]')
+  if (!maybeTarget) return
+  const target = maybeTarget as HTMLElement
+
+  let shiftX = e.clientX - target.getBoundingClientRect().left
+  let shiftY = e.clientY - target.getBoundingClientRect().top
+  
+  target.style.position = 'absolute'
+  target.style.zIndex = '1000'
+  document.body.append(target)
+
+  moveAt(e.pageX, e.pageY);
+
+  function moveAt(pageX:number, pageY:number) {
+    target.style.left = pageX - shiftX + 'px'
+    target.style.top = pageY - shiftY + 'px'
+  }
+
+  function onMouseMove(event:MouseEvent) {
+    moveAt(event.pageX, event.pageY)
+  }
+
+  document.addEventListener('mousemove', onMouseMove);
+  document.body.style.userSelect = 'none'
+  
+  target.addEventListener('mouseup', ()=>{
+    document.removeEventListener('mousemove', onMouseMove);
+    document.body.style.userSelect = ''
+  }, {once:true})
+  
+})
+
+const combinations = [] as any
+
+function runOnKeys(fn:Function, ...args:string[]) {
+  const keys = {} as Record<string, boolean>
+  for (let key of args) {
+    keys[key]=false
+  }
+  combinations.push({keys,fn})
+}
+
+document.addEventListener('keydown', (e)=>{
+  const start = Date.now()
+  for (let el of combinations) {
+    if (e.code in el.keys) {
+      el.keys[e.code]=true
+    }
+    const vals = Object.values(el.keys)
+    if (vals.every(o=>o)) {
+      el.fn()
+      for (let key in el.keys) {
+        el.keys[key]=false
+      }
+    }
+  }
+  console.log(Date.now()-start)
+})
+document.addEventListener('keyup', (e)=>{
+  for (let el of combinations) {
+    if (e.code in el.keys) {
+      el.keys[e.code]=false
+    }
+  }
+})
+
+runOnKeys(() => alert("Привет!"),"KeyQ","KeyW")
+runOnKeys(() => alert("Пока!"),"KeyQ","KeyZ", "KeyT")

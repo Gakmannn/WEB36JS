@@ -27,6 +27,13 @@
         background-color: blueviolet;
         transition: 1s;
       }
+      .ball[data-draggable] {
+        background-color: blueviolet;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+      }
+
       .numpad {
         display: grid;
         grid-template-columns: 50px 50px 50px;
@@ -65,6 +72,14 @@
     <img src="vite.svg" alt="">
     New project
     
+    <div style="display: flex;">
+      <div class="ball" data-draggable></div>
+      <div class="ball" data-draggable></div>
+      <div class="ball" data-draggable></div>
+      <div class="ball" data-draggable></div>
+      <div class="ball" data-draggable></div>
+    </div>
+
     <div style="text-align: center;">
       <span id="num">1</span>
       <button id="add">add</button>
@@ -107,7 +122,7 @@
 
         </div>
       </div>
-      <div class="numpad">
+      <div  data-draggable class="numpad">
         <div class="button" id="topLeft"><div style="transform: rotate(-135deg); position: relative;">-&gt;</div></div>
         <div class="button" id="top"><div style="transform: rotate(-90deg);">-&gt;</div></div>
         <div class="button" id="topRight"><div style="transform: rotate(-45deg);">-&gt;</div></div>
@@ -131,7 +146,7 @@
     <div id="app"></div>
 
 
-    <div id="field">
+    <div data-draggable id="field">
       . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
       . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
       . . . . . . . .
