@@ -3301,3 +3301,31 @@ document.addEventListener('keyup', (e)=>{
 
 runOnKeys(() => alert("Привет!"),"KeyQ","KeyW")
 runOnKeys(() => alert("Пока!"),"KeyQ","KeyZ", "KeyT")
+
+{
+
+  numdapDiv.style.backgroundColor = 'white'
+
+  const observer = new IntersectionObserver((entries: IntersectionObserverEntry[])=>{
+    entries.forEach((entry: IntersectionObserverEntry) => {
+      if (entry.isIntersecting) {
+        if (entry.intersectionRatio >= 0 && entry.intersectionRatio < 0.45) {
+          numdapDiv.style.backgroundColor = 'pink'
+        }
+        if (entry.intersectionRatio >= 0.45 && entry.intersectionRatio < 0.75) {
+          numdapDiv.style.backgroundColor = 'red'
+        }
+        if (entry.intersectionRatio === 1) {
+          numdapDiv.style.backgroundColor = 'blueviolet'
+        }
+      } else {
+        numdapDiv.style.backgroundColor = 'white'
+      }
+    })
+  }, {
+    rootMargin: '-50px 0px',
+    threshold: [0, 0.5, 1],
+  })
+  observer.observe(numdapDiv)
+
+}
