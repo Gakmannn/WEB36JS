@@ -1125,6 +1125,7 @@ renderBuyList(toBuyList)
 // а не добавлять новую.
 
 const productNameInput = document.getElementById('productName') as HTMLInputElement
+const productForm = document.getElementById('productForm') as HTMLFormElement
 const productCountInput = document.getElementById('productCount') as HTMLInputElement
 const addProductButton = document.getElementById('addProduct') as HTMLButtonElement
 
@@ -1143,11 +1144,52 @@ function addToBuyList(arr:product[], name:string, count:number) {
 }
 addToBuyList(toBuyList, 'картофель', 2)
 
-addProductButton.addEventListener('click', function() {
+document.forms[0].addEventListener('submit', (e)=>{
+  e.preventDefault()
+  if (!productNameInput.value) {
+    document.forms[0].elements[0].innerHTML = 'Поле не заполнено'
+    const p = document.forms[0].elements[0] as HTMLParagraphElement
+    p.hidden = false
+    return
+  }
   const count = parseFloat(productCountInput.value.replace(',', '.'))
+  if (!count) {
+    productCountInput.previousElementSibling!.innerHTML = 'Поле не заполнено'
+    // @ts-ignore
+    productCountInput.previousElementSibling!.hidden = false
+    return
+  }
   addToBuyList(toBuyList, productNameInput.value, count)
   productNameInput.value = ''
   productCountInput.value = ''
+  // @ts-ignore
+  productCountInput.previousElementSibling!.hidden = true
+  // @ts-ignore
+  productNameInput.previousElementSibling!.hidden = true
+})
+
+addProductButton.addEventListener('click', function(e) {
+  e.preventDefault()
+  if (!productNameInput.value) {
+    productNameInput.previousElementSibling!.innerHTML = 'Поле не заполнено'
+    // @ts-ignore
+    productNameInput.previousElementSibling!.hidden = false
+    return
+  }
+  const count = parseFloat(productCountInput.value.replace(',', '.'))
+  if (!count) {
+    productCountInput.previousElementSibling!.innerHTML = 'Поле не заполнено'
+    // @ts-ignore
+    productCountInput.previousElementSibling!.hidden = false
+    return
+  }
+  addToBuyList(toBuyList, productNameInput.value, count)
+  productNameInput.value = ''
+  productCountInput.value = ''
+  // @ts-ignore
+  productCountInput.previousElementSibling!.hidden = true
+  // @ts-ignore
+  productNameInput.previousElementSibling!.hidden = true
 })
 
 // 3 Покупка продукта.Функция принимает название продукта
@@ -1166,10 +1208,19 @@ function setBuyed(arr: product[], name: string) {
 
 setBuyed(toBuyList, 'картофель')
 
-setBuyedButton.addEventListener('click', function() {
+setBuyedButton.addEventListener('click', function(e) {
+  e.preventDefault()
+  if (!productNameInput.value) {
+    productNameInput.previousElementSibling!.innerHTML = 'Поле не заполнено'
+    // @ts-ignore
+    productNameInput.previousElementSibling!.hidden = false
+    return
+  }
   setBuyed(toBuyList, productNameInput.value)
   productNameInput.value = ''
   productCountInput.value = ''
+  // @ts-ignore
+  productNameInput.previousElementSibling!.hidden = true
 })
 
 toBuyListOL.addEventListener('click', function(e) {
@@ -3329,3 +3380,4 @@ runOnKeys(() => alert("Пока!"),"KeyQ","KeyZ", "KeyT")
   observer.observe(numdapDiv)
 
 }
+

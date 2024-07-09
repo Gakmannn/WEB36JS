@@ -74,11 +74,11 @@
     New project
     
     <div style="display: flex;">
+      <div class="ball" tabindex="1" data-draggable></div>
       <div class="ball" data-draggable></div>
+      <div class="ball" tabindex="3" data-draggable></div>
       <div class="ball" data-draggable></div>
-      <div class="ball" data-draggable></div>
-      <div class="ball" data-draggable></div>
-      <div class="ball" data-draggable></div>
+      <div class="ball" tabindex="2" data-draggable></div>
     </div>
 
     <div style="text-align: center;">
@@ -103,19 +103,30 @@
     <div style="display: flex;">
       <ol id="toBuyList"></ol>
       <div style="margin: 20px;">
-        <input type="text" id="productName" placeholder="название продукта">
-        <br>
-        <input type="text" id="productCount" placeholder="количество">
-        <br id="br">
-        <button id="addProduct">Добавить</button>
-        <br>
-        <button id="setBuyed">Отметить купленным</button>
+        <form id="productForm">
+          <p hidden></p>
+          <input type="text" id="productName" placeholder="название продукта">
+          <br>
+          <p hidden></p>
+          <input type="text" id="productCount" placeholder="количество">
+          <br id="br">
+          <button id="addProduct">Добавить</button>
+          <br>
+          <button id="setBuyed">Отметить купленным</button>
+        </form>
       </div>
     </div>
+
+    <textarea name="" id="ta">
+      fdsgfdssd
+      dsfdsffds
+    </textarea>
 
     <div id="container">
       <ul></ul>
     </div>
+
+    <div contenteditable></div>
 
     <div style="display: flex;" hidden>
       <div id="canvas">
