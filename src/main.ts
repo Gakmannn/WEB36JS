@@ -3381,3 +3381,14 @@ runOnKeys(() => alert("Пока!"),"KeyQ","KeyZ", "KeyT")
 
 }
 
+document.addEventListener('copy', ()=>{
+  const text = window.getSelection() + ' скопировано с моего сайта!'
+  navigator.clipboard.writeText(text)
+})
+
+console.log(localStorage.length)
+// console.log(JSON.parse(localStorage.getItem('obj')))
+console.log(JSON.parse(localStorage.obj))
+console.log(localStorage.key(0))
+
+localStorage.obj = JSON.stringify({name: 'Vasya'})
