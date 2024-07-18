@@ -3392,3 +3392,84 @@ console.log(JSON.parse(localStorage.obj))
 console.log(localStorage.key(0))
 
 localStorage.obj = JSON.stringify({name: 'Vasya'})
+
+let promise = new Promise(function (resolve, reject) {
+  console.log('promise start')
+  // эта функция выполнится автоматически, при вызове new Promise
+  // через 1 секунду сигнализировать, что задача выполнена с результатом "done"
+  setTimeout(() => {
+    resolve({dsfsdf:123})
+    reject(new Error("Whoops!"))
+  }, 3000)
+})
+.finally(()=>{
+  console.log('done')
+  // throw new Error('no problem')
+})  
+.then(done)
+.catch(fail)
+
+function done(data:any) {
+  console.log(data)
+}
+function fail(error:Error) {
+  console.log(error)
+}
+
+// fetch('http://localhost:5173/WEB36JS/')
+// .then((data)=>{
+//   console.log(data)
+// })
+// .catch((error)=>{
+//   console.log(error)
+// })
+
+
+// window.addEventListener('unhandledrejection', function (event) {
+//   // объект события имеет два специальных свойства:
+//   alert(event.promise); // [object Promise] - промис, который сгенерировал ошибку
+//   alert(event.reason); // Error: Ошибка! - объект ошибки, которая не была обработана
+// });
+
+// window.onerror = function (message, url, line, col, error) {
+//   console.log(`${message}\n В ${line}:${col} на ${url}`);
+// }
+
+// window.addEventListener('error', (e) => {
+//   console.log(e)
+// })
+
+try {
+  'dfsdsfsdf'
+  throw new Error('some error')
+} catch (e) {
+  console.log(e)
+  // throw e
+} finally {
+  console.log('good')
+}
+console.log('good')
+
+
+// Запрашиваем user.json
+// fetch(`https://api.github.com/users/GakmanNN`)
+// // Загружаем ответ в формате json
+// .then(response => {
+//   // console.log('test1')
+//   // fdsfsfd
+//   // console.log('test2')
+//   return response.json()
+// })
+// // Показываем аватар (githubUser.avatar_url) в течение 3 секунд (возможно, с анимацией)
+// .then(githubUser => {
+//   console.log(githubUser)
+//   let img = document.createElement('img');
+//   img.src = githubUser.avatar_url;
+//   img.className = "promise-avatar-example";
+//   document.body.append(img);
+
+//   setTimeout(() => img.remove(), 3000); // (*)
+// })
+// .catch((e)=>{
+//   console.log(e)
+// })
