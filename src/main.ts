@@ -3538,3 +3538,21 @@ async function sllepable() {
 }
 
 // sllepable()
+
+async function loadJson(url:string) {
+  try {
+    const response = await fetch(url)
+    if (response.status == 200) {
+      return response.json()
+    } else {
+      throw new Error(response.status.toString());
+    }
+  } catch (e) {
+    console.log(e)
+  }
+}
+
+// ;(async () => {
+//   const user = await loadJson('https://api.github.com/users/GakmanNN')
+//   console.log(user)
+// })()
