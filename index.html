@@ -63,9 +63,24 @@
         background-color: rgb(88, 105, 113);
         transition: 0.1s;
       }
+      .circle {
+        transition-property: width, height;
+        /* transition-duration: .2s; */
+        position: fixed;
+        transform: translateX(-50%) translateY(-50%);
+        background-color: red;
+        border-radius: 50%;
+      }
+      .message-ball {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
     </style>
   </head>
   <body>
+
+    <div class="circle"></div>
 
     <input type="range">
 

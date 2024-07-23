@@ -3452,24 +3452,89 @@ console.log('good')
 
 
 // Запрашиваем user.json
-// fetch(`https://api.github.com/users/GakmanNN`)
-// // Загружаем ответ в формате json
-// .then(response => {
-//   // console.log('test1')
-//   // fdsfsfd
-//   // console.log('test2')
-//   return response.json()
-// })
-// // Показываем аватар (githubUser.avatar_url) в течение 3 секунд (возможно, с анимацией)
-// .then(githubUser => {
-//   console.log(githubUser)
-//   let img = document.createElement('img');
-//   img.src = githubUser.avatar_url;
-//   img.className = "promise-avatar-example";
-//   document.body.append(img);
+async function showAva() {
+  try {
+    const response = await fetch(`https://api.github.com/users/GakmanNN`)
+    const user = await response.json()
+    let img = document.createElement('img');
+    img.src = user.avatar_url;
+    img.className = "promise-avatar-example";
+    document.body.append(img);
+    
+    setTimeout(() => img.remove(), 3000)
+  } catch(e) {
+    console.log(e)
+  }
+  
+}
 
-//   setTimeout(() => img.remove(), 3000); // (*)
-// })
-// .catch((e)=>{
-//   console.log(e)
-// })
+showAva()
+
+async function f() {
+
+  let promise = new Promise((resolve, reject) => {
+    setTimeout(() => resolve("готово!"), 5000)
+  });
+  console.log('before await')
+  let result = await promise; // будет ждать, пока промис не выполнится (*)
+  console.log('after await')
+  
+  console.log(result); // "готово!"
+  
+}
+
+;console.log((()=>1)())
+
+async function showCircle(top: number, left: number, r:number, time:number, delay=0) {
+  if (delay) {
+    await sleep(delay)
+  }
+  // const circleDiv = document.querySelector('.circle') as HTMLDivElement
+  const circleDiv = document.createElement('div')
+  circleDiv.className = 'circle'
+  circleDiv.style.top = top+'px'
+  circleDiv.style.left = left+'px'
+  circleDiv.style.width = '0px'
+  circleDiv.style.height = '0px'
+  document.body.append(circleDiv)
+  const d = r*2*16/time
+  let currentD = 0
+  for (let i = 0; i < time; i += 16) {
+    await sleep(16)
+    currentD+=d
+    requestAnimationFrame(()=>{
+      circleDiv.style.width = currentD +'px'
+      circleDiv.style.height = currentD +'px'
+    })
+  }
+  return circleDiv
+}
+
+async function myF() {
+  showCircle(280, 350, 40, 1000,1000) as HTMLDivElement
+  showCircle(150, 200, 100, 2000).then(div=>{
+    div.classList.add('message-ball');
+    div.append("Hello, world!");
+  })
+  showCircle(350, 200, 150, 2000) as HTMLDivElement
+  showCircle(280, 50, 40, 1000, 1000) as HTMLDivElement
+}
+
+myF()
+
+async function sleep(ms:number) {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(0), ms)
+  })
+}
+
+async function sllepable() {
+  console.log('start')
+  for (let i=0;i<10;i++) {
+    console.log('iter')
+    await sleep(500)
+  }
+  console.log('end')
+}
+
+// sllepable()
