@@ -3472,7 +3472,7 @@ showAva()
 
 async function f() {
 
-  let promise = new Promise((resolve, reject) => {
+  let promise = new Promise((resolve) => {
     setTimeout(() => resolve("готово!"), 5000)
   });
   console.log('before await')
@@ -3483,13 +3483,13 @@ async function f() {
   
 }
 
-;console.log((()=>1)())
+// Самоисполняющаяся функция
+console.log((()=>1)())
 
 async function showCircle(top: number, left: number, r:number, time:number, delay=0) {
   if (delay) {
     await sleep(delay)
   }
-  // const circleDiv = document.querySelector('.circle') as HTMLDivElement
   const circleDiv = document.createElement('div')
   circleDiv.className = 'circle'
   circleDiv.style.top = top+'px'
@@ -3511,13 +3511,13 @@ async function showCircle(top: number, left: number, r:number, time:number, dela
 }
 
 async function myF() {
-  showCircle(280, 350, 40, 1000,1000) as HTMLDivElement
+  showCircle(280, 350, 40, 1000,1000)
   showCircle(150, 200, 100, 2000).then(div=>{
     div.classList.add('message-ball');
     div.append("Hello, world!");
   })
-  showCircle(350, 200, 150, 2000) as HTMLDivElement
-  showCircle(280, 50, 40, 1000, 1000) as HTMLDivElement
+  showCircle(350, 200, 150, 2000)
+  showCircle(280, 50, 40, 1000, 1000)
 }
 
 myF()
