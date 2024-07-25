@@ -1,4 +1,5 @@
 import './style.scss'
+import axios from 'axios'
 
 setTimeout(() => console.log('*****Hello world*****'),0)
 
@@ -3520,7 +3521,10 @@ async function myF() {
   showCircle(280, 50, 40, 1000, 1000)
 }
 
-myF()
+const nevButton = document.getElementById('nev') as HTMLInputElement
+nevButton.addEventListener('click',()=>{
+  myF()
+})
 
 async function sleep(ms:number) {
   return new Promise((resolve) => {
@@ -3556,3 +3560,91 @@ async function loadJson(url:string) {
 //   const user = await loadJson('https://api.github.com/users/GakmanNN')
 //   console.log(user)
 // })()
+
+fetch('http://localhost:5173/WEB36JS/')
+  .then((resp) => console.log(resp.status, resp.ok))
+// .then((data)=>console.log(data))
+
+// axios('http://localhost:5173/WEB36JS/').then((resp) => console.log(resp))
+
+
+
+async function sendMail() {
+
+  const obj = {mail:'sdfsdf@fds.ru'}
+
+  let response = await fetch('http://localhost:3002/mail', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json;charset=utf-8'
+    },
+    body: JSON.stringify(obj)
+  })
+  const data = await response.json()
+  console.log(data)
+
+  const resp = await axios.post('http://localhost:3002/mail', obj)
+  console.log(resp.data)
+}
+
+try {
+  sendMail()
+} catch (e) {
+  console.log('Не включен сервер')
+}
+
+let isMouseDown = false
+let mouseButton = 0
+document.addEventListener('mousedown', (e) => {
+  isMouseDown = true
+  mouseButton = e.button
+})
+
+document.addEventListener('mouseup', (e) => {
+  isMouseDown = false
+  mouseButton = e.button
+})
+
+const canvasElem = document.getElementById('canvasElem') as HTMLCanvasElement
+canvasElem.onmousemove = function (e) {
+  if (isMouseDown) {
+    let ctx = canvasElem.getContext('2d')
+    if (ctx) {
+      ctx.lineTo(e.clientX, e.clientY)
+      ctx.stroke()
+    }
+  }
+}
+
+const sendCanvas = document.getElementById('sendCanvas')
+sendCanvas?.addEventListener('click', async ()=>{
+  try {
+    // @ts-ignore
+    const blob: Blob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'))
+    const file = new File([blob], Date.now()+"img.jpg", { type: "image/jpeg" })
+    const fD = new FormData()
+    fD.append('img', file)
+    let response = await fetch('http://localhost:3002/data', {
+      method: 'POST',
+      body: fD
+    })
+
+    // сервер ответит подтверждением и размером изображения
+    let result = await response.json()
+    console.log(result)
+  } catch (e) {
+    console.log('Не включен сервер')
+  }
+})
+
+try {
+  axios('http://localhost:3002/a').then((resp) => console.log(resp.data))
+  fetch('http://localhost:3002/a')
+  .then((resp) => resp.json())
+  .then((data)=>{console.log(data)})
+} catch (e) {
+  console.log('Не включен сервер')
+}
+
+
+
