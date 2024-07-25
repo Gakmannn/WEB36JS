@@ -3646,5 +3646,6 @@ try {
   console.log('Не включен сервер')
 }
 
-
+// let search = 'element'
+// axios(`http://www.omdbapi.com/?apikey=a821535d&s=${search}&page=2`).then((resp) => console.log(resp.data))
 
