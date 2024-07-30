@@ -8,7 +8,7 @@ export default {
         // @ts-ignore
         main: resolve(__dirname, 'index.html'),
         // @ts-ignore
-        page2: resolve(__dirname, 'dop.html'),
+        idbm: resolve(__dirname, 'idbm.html'),
       }
     }
   }

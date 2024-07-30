@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="module" src="/src/idbm.ts"></script>
+  <style>
+    .flex {
+      display: flex;
+      gap: 10px;
+    }
+    .fdc {
+      flex-direction: column;
+    }
+    .jcc {
+      justify-content: center;
+    }
+    .aic {
+      align-items: center;
+    }
+    select {
+      height: 22px;
+    }
+    form {
+      background-color:blanchedalmond;
+      border: 1px dashed blue;
+      border-radius: 10px;
+      padding: 20px;
+    }
+    #content {
+      margin: 20px 0;
+      flex-wrap: wrap;
+    }  
+    #content>div {
+      display: flex;
+      width: 250px;
+      height: 170px;
+      gap: 10px;
+      background-color:blanchedalmond;
+      border: 1px dashed blue;
+      border-radius: 10px;
+      padding: 20px;
+    }
+  </style>
+</head>
+<body>
+  <a href="/">Home</a>
+  <div class="flex jcc aic">
+    <form class="flex fdc">
+      <input type="text" placeholder="title">
+      <select>
+        <option value="movie">movie</option>
+        <option value="series">series</option>
+        <option value="episode">episode</option>
+      </select>
+      <input type="submit" value="Find!">
+    </form>
+  </div>
+
+  <div id="content" class="flex jcc"></div>
+  <div id="pagination" class="flex jcc"></div>
+
+</body>
+</html>

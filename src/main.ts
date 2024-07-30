@@ -1,6 +1,19 @@
 import './style.scss'
 import axios from 'axios'
 
+// const includes_original = Array.prototype.includes
+
+// @ts-ignore
+// Array.prototype.includes = function(...arr) {
+//   console.log('***********************************')
+//   console.log(this)
+//   console.log('***********************************')
+//   return false
+//   //return includes_original.apply(this, arr)
+// }
+
+;[0,1,2].indexOf(1)
+
 setTimeout(() => console.log('*****Hello world*****'),0)
 
 document.write('<div id="main" style="background: lightblue;">dfgdfgdf</div>')
@@ -3524,6 +3537,7 @@ async function myF() {
 const nevButton = document.getElementById('nev') as HTMLInputElement
 nevButton.addEventListener('click',()=>{
   myF()
+  ;[0,12,3].includes(3)
 })
 
 async function sleep(ms:number) {
@@ -3570,10 +3584,10 @@ fetch('http://localhost:5173/WEB36JS/')
 
 
 async function sendMail() {
-
-  const obj = {mail:'sdfsdf@fds.ru'}
-
-  let response = await fetch('http://localhost:3002/mail', {
+  try {
+    const obj = {mail:'sdfsdf@fds.ru'}
+    
+    let response = await fetch('http://localhost:3002/mail', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json;charset=utf-8'
@@ -3582,9 +3596,12 @@ async function sendMail() {
   })
   const data = await response.json()
   console.log(data)
-
+  
   const resp = await axios.post('http://localhost:3002/mail', obj)
   console.log(resp.data)
+  } catch (e) {
+    console.log(e)
+  }
 }
 
 try {
@@ -3638,10 +3655,13 @@ sendCanvas?.addEventListener('click', async ()=>{
 })
 
 try {
-  axios('http://localhost:3002/a').then((resp) => console.log(resp.data))
-  fetch('http://localhost:3002/a')
-  .then((resp) => resp.json())
-  .then((data)=>{console.log(data)})
+  axios('http://localhost:3002/a')
+  .then((resp) => console.log(resp.data))
+  .catch((e)=> {throw e})
+  // fetch('http://localhost:3002/a')
+  // .then((resp) => resp.json())
+  // .then((data)=>{console.log(data)})
+  // .catch((e)=>{console.log(e)})
 } catch (e) {
   console.log('Не включен сервер')
 }
@@ -3649,3 +3669,8 @@ try {
 // let search = 'element'
 // axios(`http://www.omdbapi.com/?apikey=a821535d&s=${search}&page=2`).then((resp) => console.log(resp.data))
 
+// new Promise((resolve, reject)=>{
+//   setTimeout(()=>resolve([1,2,3]),1000)
+// })
+// .then((data)=>data.includes(2))
+// .then((res)=>console.log(res))
