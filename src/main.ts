@@ -3639,8 +3639,10 @@ sendCanvas?.addEventListener('click', async ()=>{
     // @ts-ignore
     const blob: Blob = await new Promise(resolve => canvasElem.toBlob(resolve, 'image/png'))
     const file = new File([blob], Date.now()+"img.jpg", { type: "image/jpeg" })
+    console.log(file)
     const fD = new FormData()
     fD.append('img', file)
+    fD.append('data', JSON.stringify({key:'val'}))
     let response = await fetch('http://localhost:3002/data', {
       method: 'POST',
       body: fD
@@ -3674,3 +3676,12 @@ try {
 // })
 // .then((data)=>data.includes(2))
 // .then((res)=>console.log(res))
+
+
+// https://ya.ru/search/?text=%D1%8B%D0%B0+%D1%8B%D0%B2%D0%B0+%D1%8B%D0%B2%D0%B0%D0%B2%D1%8B+%D0%B0%D0%B2%D1%8B%D0%B0%D1%83%D1%86%D0%BA&lr=239&family=yes&search_source=yaru_desktop_common&search_domain=yaru
+
+const encoded = encodeURI('https://ru.wikipedia.org/wiki/Тест')
+console.log(encoded)
+console.log(decodeURI(encoded))
+
+// axios(`https://ya.ru/?text=google`).then((resp) => console.log(resp.data))

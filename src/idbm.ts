@@ -15,6 +15,7 @@ form.addEventListener('submit', async (e)=>{
   // &page=2
   const url = `http://www.omdbapi.com/?apikey=a821535d&s=${titleInput.value}&type=${select.value}`
   const resp = await axios(url)
+  console.log(+resp.data.totalResults)
   // if (data?.Search) {
   //   data?.Search.push(...resp.data.Search)
   // } else {
@@ -25,11 +26,34 @@ form.addEventListener('submit', async (e)=>{
 })
 
 const paginationDiv = document.querySelector('#pagination') as HTMLDivElement
+const contentDiv = document.querySelector('#content') as HTMLDivElement
 
 paginationDiv.addEventListener('click', (e)=>{
   const target = e.target as HTMLElement
   if (!target.dataset.page) return false
   renderWithPagination(data, +target.dataset.page*3)
+})
+
+let div : HTMLDivElement
+
+document.addEventListener('click', (e)=>{
+  const target = e.target as HTMLElement
+  if (target.className != 'overlay') return false
+  document.body.style.overflow = ''
+  div.remove()
+})
+
+contentDiv.addEventListener('click', (e)=>{
+  const target = e.target as HTMLElement
+  if (!target.dataset.id) return false
+  div = document.createElement('div')
+  div.className = 'overlay'
+  div.innerHTML = `
+    <div class="modal">text</div>
+  `
+  document.body.style.overflow = 'hidden'
+  console.log(div)
+  document.body.append(div)
 })
 
 function renderWithPagination(data:any, start:number) {
@@ -41,7 +65,6 @@ function renderWithPagination(data:any, start:number) {
   }
 }
 
-const contentDiv = document.querySelector('#content') as HTMLDivElement
 function render(arr:any[]) {
   contentDiv.innerHTML = ''
   
@@ -60,3 +83,4 @@ function render(arr:any[]) {
     contentDiv.insertAdjacentHTML('beforeend', content)
   })
 }
+
